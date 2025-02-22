@@ -1,5 +1,5 @@
 import { api } from './axios';
-import { User } from '../types/user';
+import { User } from '../../types/user';
 
 interface LoginRequest {
   email: string;

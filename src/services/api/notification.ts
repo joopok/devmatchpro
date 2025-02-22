@@ -1,5 +1,5 @@
 import { api } from './axios';
-import { Notification } from '../types/notification';
+import { Notification } from '../../types/notification';
 
 export const notificationApi = {
   getNotifications: () => 

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { authApi } from '../../api/auth';
+import { authApi } from '../../services/api/auth';
 import { setUser, setToken, setLoading, setError } from './authSlice';
 import type { User } from '../../types/user';
 import type { RootState } from '../store';

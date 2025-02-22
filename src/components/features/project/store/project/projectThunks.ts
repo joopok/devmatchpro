@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Project, CreateProjectInput, UpdateProjectInput } from '../../types/project';
-import { api } from '../../../../../api/api';
+import { api } from '../../../../../services/api/axios';
 
 export const createProject = createAsyncThunk(
   'project/create',

@@ -1,10 +1,8 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
 import { IconType, IconBaseProps } from 'react-icons';
 import { 
   FiHome,
-  FiSliders, 
+  FiPieChart, 
   FiGrid,
   FiMessageSquare,
   FiCalendar,
@@ -15,7 +13,7 @@ import {
   FiSettings,
   FiHelpCircle,
   FiBarChart,
-  FiPieChart, FiFolder, FiMessageCircle, FiBarChart2} from 'react-icons/fi';
+} from 'react-icons/fi';
 import { Button } from '../../common/Button';
 import { SidebarContainer, Logo, NavItem, Badge, NavSection, NavHeader } from './Sidebar.styles';
 

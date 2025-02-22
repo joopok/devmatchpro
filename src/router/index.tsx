@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { Layout } from '../components/layout/Layout';
 import { PrivateRoute } from './PrivateRoute';
-import { projectApi } from '../api/project';
+import { projectApi } from '../services/api/project';
 
 const ProjectList = React.lazy(() => import('../pages/projects/ProjectList'));
 const ProjectDetail = React.lazy(() => import('../pages/projects/ProjectDetail'));

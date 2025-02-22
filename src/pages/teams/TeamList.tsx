@@ -2,7 +2,7 @@ import React from 'react';
 import { TeamList as TeamListComponent } from '../../components/features/team/TeamList';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { api } from '../../api/axios';
+import { api } from '../../services/api/axios';
 
 interface Team {
   id: string;
