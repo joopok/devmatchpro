@@ -1,10 +1,28 @@
 import React from 'react';
+import styled from 'styled-components';
+import { RevenueAnalytics } from '../../components/Project/analytics/RevenueAnalytics/RevenueAnalytics';
 
-const Analytics: React.FC = () => {
+const AnalyticsContainer = styled.div`
+  padding: ${({ theme }) => theme.spacing.lg};
+`;
+
+const Analytics = () => {
   return (
-    <div>
+    <AnalyticsContainer>
       <h1>분석</h1>
-    </div>
+      <RevenueAnalytics 
+        metrics={{
+          totalRevenue: 0,
+          averageProjectValue: 0,
+          activeProjects: 0,
+          growthRate: 0,
+          monthlyData: [],
+          revenueByCategory: []
+        }}
+        period="month"
+        onPeriodChange={() => {}}
+      />
+    </AnalyticsContainer>
   );
 };
 

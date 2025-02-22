@@ -1,0 +1,12 @@
+export { default as Home } from './Home';
+export { default as Analytics } from './analytics';
+export { default as Login } from './auth/Login';
+export { default as Register } from './auth/Register';
+export { default as Chat } from './chat';
+export { default as Dashboard } from './dashboard';
+export { default as Projects } from './projects';
+export { default as ProjectList } from './projects/ProjectList';
+export { default as ProjectDetail } from './projects/ProjectDetail';
+export { default as Settings } from './settings';
+export { default as TeamList } from './teams/TeamList';
+export { default as TeamDetail } from './teams/TeamDetail'; 

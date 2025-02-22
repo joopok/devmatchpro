@@ -1,17 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../../types/user';
 
-// 데모 사용자 정보
-const demoUser: User = {
-  id: 'demo-user',
-  email: 'demo@example.com',
-  name: '데모 사용자',
-  role: 'DEVELOPER',
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
-};
-
-interface AuthState {
+export interface AuthState {
   user: User | null;
   token: string | null;
   isLoading: boolean;
@@ -19,8 +9,8 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  user: demoUser, // 데모 사용자로 자동 로그인
-  token: 'demo-token',
+  user: null,
+  token: null,
   isLoading: false,
   error: null,
 };
@@ -29,12 +19,16 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<User>) => {
+    setUser: (state, action: PayloadAction<User | null>) => {
       state.user = action.payload;
     },
-    setToken: (state, action: PayloadAction<string>) => {
+    setToken: (state, action: PayloadAction<string | null>) => {
       state.token = action.payload;
-      localStorage.setItem('token', action.payload);
+      if (action.payload) {
+        localStorage.setItem('token', action.payload);
+      } else {
+        localStorage.removeItem('token');
+      }
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;

@@ -1,10 +1,17 @@
 import React from 'react';
+import styled from 'styled-components';
+import { ProjectList } from './ProjectList';
 
-const Projects: React.FC = () => {
+const ProjectsContainer = styled.div`
+  padding: ${({ theme }) => theme.spacing.lg};
+`;
+
+const Projects = () => {
   return (
-    <div>
-      <h1>프로젝트 목록</h1>
-    </div>
+    <ProjectsContainer>
+      <h1>프로젝트</h1>
+      <ProjectList />
+    </ProjectsContainer>
   );
 };
 

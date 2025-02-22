@@ -1,10 +1,15 @@
 import React from 'react';
+import styled from 'styled-components';
 
-const Chat: React.FC = () => {
+const ChatContainer = styled.div`
+  padding: ${({ theme }) => theme.spacing.lg};
+`;
+
+const Chat = () => {
   return (
-    <div>
+    <ChatContainer>
       <h1>메시지</h1>
-    </div>
+    </ChatContainer>
   );
 };
 

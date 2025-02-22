@@ -44,15 +44,15 @@ export enum WorkType {
 
 export interface User {
   id: string;
-  name: string;
   email: string;
-  profileImage?: string;
+  name: string;
+  role: 'ADMIN' | 'DEVELOPER' | 'CLIENT';
   bio?: string;
-  role: UserRole;
-  createdAt: string;
-  updatedAt: string;
   githubUrl?: string;
   portfolioUrl?: string;
+  profileImage?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Experience {
@@ -112,4 +112,9 @@ export const isDeveloperProfile = (profile: DeveloperProfile | ClientProfile): p
 
 export const isClientProfile = (profile: DeveloperProfile | ClientProfile): profile is ClientProfile => {
   return profile.role === 'CLIENT';
-}; 
+};
+
+// 인증용 User 타입 (password 포함)
+export interface AuthUser extends User {
+  password: string;
+}

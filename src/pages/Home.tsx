@@ -1,10 +1,15 @@
 import React from 'react';
+import styled from 'styled-components';
 
-const Home: React.FC = () => {
+const HomeContainer = styled.div`
+  padding: ${({ theme }) => theme.spacing.lg};
+`;
+
+const Home = () => {
   return (
-    <div>
-      <h1>Home!!!!</h1>
-    </div>
+    <HomeContainer>
+      <h1>홈</h1>
+    </HomeContainer>
   );
 };
 

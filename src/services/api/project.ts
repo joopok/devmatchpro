@@ -1,4 +1,4 @@
-import { api } from './apiClient'; // 실제 API 클라이언트
+import { api } from './axios'; // 실제 API 클라이언트
 
 interface Project {
   id: string;
@@ -28,19 +28,11 @@ interface UpdateProjectDto {
 
 export const projectApi = {
   getAll: () => api.get<Project[]>('/projects'),
-  
   getById: (id: string) => api.get<Project>(`/projects/${id}`),
-  
   create: (data: CreateProjectDto) => api.post<Project>('/projects', data),
-  
-  update: (id: string, data: UpdateProjectDto) => 
-    api.patch<Project>(`/projects/${id}`, data),
-  
+  update: (id: string, data: UpdateProjectDto) =>  api.patch<Project>(`/projects/${id}`, data),
   delete: (id: string) => api.delete(`/projects/${id}`),
-  
-  getByTeam: (teamId: string) => 
-    api.get<Project[]>(`/teams/${teamId}/projects`),
-
+  getByTeam: (teamId: string) => api.get<Project[]>(`/teams/${teamId}/projects`),
   getProjects: async () => {
     // API 구현
     return [];

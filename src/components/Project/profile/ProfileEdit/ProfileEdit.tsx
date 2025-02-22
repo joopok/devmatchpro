@@ -42,10 +42,10 @@ export const ProfileEdit: React.FC = () => {
   } = useForm<ProfileFormData>({
     defaultValues: {
       name: user?.name || '',
-      //bio: user?.bio || '',
-      //role: user?.role || '',
-      //githubUrl: user?.githubUrl || '',
-      //portfolioUrl: user?.portfolioUrl || '',
+      bio: user?.bio || '',
+      role: user?.role || '',
+      githubUrl: user?.githubUrl || '',
+      portfolioUrl: user?.portfolioUrl || '',
     },
   });
 

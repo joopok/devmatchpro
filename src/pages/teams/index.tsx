@@ -1,10 +1,17 @@
 import React from 'react';
+import styled from 'styled-components';
+import TeamList from './TeamList';
 
-const Teams: React.FC = () => {
+const TeamsContainer = styled.div`
+  padding: ${({ theme }) => theme.spacing.lg};
+`;
+
+const Teams = () => {
   return (
-    <div>
-      <h1>팀 목록</h1>
-    </div>
+    <TeamsContainer>
+      <h1>팀</h1>
+      <TeamList />
+    </TeamsContainer>
   );
 };
 

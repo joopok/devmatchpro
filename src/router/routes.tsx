@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { createBrowserRouter, RouteObject } from 'react-router-dom';
 import { Layout } from '../components/layout/Layout';
 import Dashboard from '../pages/dashboard';
+import { PrivateRoute } from '../components/auth/PrivateRoute';
 
 const Home = React.lazy(() => import('../pages/Home'));
 const Projects = React.lazy(() => import('../pages/projects/index'));
@@ -17,7 +18,11 @@ const Register = React.lazy(() => import('../pages/auth/Register'));
 const routes: RouteObject[] = [
   {
     path: '/',
-    element: <Layout />,
+    element: (
+      <PrivateRoute>
+        <Layout />
+      </PrivateRoute>
+    ),
     children: [
       {
         index: true,

@@ -1,19 +1,36 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { User } from '../types/user';
-
-interface AuthUser extends User {
-  profileImage?: string;
-  role: 'ADMIN' | 'DEVELOPER' | 'CLIENT';
-}
+import { authApi } from '../services/api/auth';
+import { setUser, setToken, logout } from '../store/auth/authSlice';
 
 export const useAuth = () => {
-  const { user, isLoading, error } = useSelector((state: RootState) => state.auth);
-  
-  return {
-    user: user as AuthUser,
+  const dispatch = useDispatch();
+  const { user, token, isLoading } = useSelector((state: RootState) => state.auth);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const savedToken = localStorage.getItem('token');
+      if (!savedToken) return;
+
+      try {
+        const { data: currentUser } = await authApi.getCurrentUser();
+        dispatch(setUser(currentUser));
+        dispatch(setToken(savedToken));
+      } catch (error) {
+        dispatch(logout());
+      }
+    };
+
+    if (!user && !isLoading) {
+      checkAuth();
+    }
+  }, [dispatch, user, isLoading]);
+
+  return { 
+    user, 
+    token, 
     isLoading,
-    error,
-    isAuthenticated: !!user,
+    isAuthenticated: !!user && !!token 
   };
 }; 
