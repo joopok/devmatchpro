@@ -1,46 +1,122 @@
-# Getting Started with Create React App
+# 프로젝트명
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 📝 프로젝트 소개
+모던 React와 TypeScript를 활용한 웹 애플리케이션입니다.
 
-## Available Scripts
+## 🛠 기술 스택
+- React
+- TypeScript
+- Redux (상태 관리)
+- Styled-components (스타일링)
+- React Router (라우팅)
 
-In the project directory, you can run:
+## 📂 프로젝트 구조
 
-### `npm start`
+src/
+├── components/
+│   ├── common/
+│   │   ├── Toast/
+│   │   └── ErrorBoundary/
+│   └── layout/
+│       └── Sidebar/
+├── router/
+│   └── routes.ts
+├── store/
+│   └── store.ts
+├── styles/
+│   ├── theme.ts
+│   ├── GlobalStyle.ts
+│   └── fonts.css
+└── App.tsx
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 🔍 주요 기능
 
-### `npm test`
+### 테마 시스템
+- 다크모드/라이트모드 지원
+- Redux를 통한 테마 상태 관리
+- styled-components ThemeProvider 사용
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 라우팅
+- React Router v6 사용
+- RouterProvider를 통한 라우팅 구현
+- Suspense를 활용한 코드 스플리팅
 
-### `npm run build`
+### 공통 컴포넌트
+- ErrorBoundary: 에러 처리
+- Toast: 알림 시스템
+- Sidebar: 사이드 네비게이션
+- LoadingFallback: 로딩 상태 UI
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 스타일링
+- styled-components 사용
+- 글로벌 스타일 적용
+- 커스텀 폰트 설정
+- 반응형 디자인 지원
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## ✨ 특징
+- TypeScript를 통한 타입 안정성
+- 컴포넌트 기반 아키텍처
+- 모듈화된 구조
+- 에러 핸들링 구현
+- 테스트 코드 작성 (App.test.tsx)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 📈 개선 예정 사항
+- 환경 변수 관리 (.env 파일)
+- API 통신 로직 분리
+- 상수 값 관리
+- 국제화(i18n) 지원
+- 성능 최적화 (메모이제이션 등)
 
-### `npm run eject`
+## 📋 커밋 히스토리
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 2024-03-XX
+- 프로젝트 초기 설정
+  - React + TypeScript 프로젝트 생성
+  - 기본 디렉토리 구조 설정
+  - ESLint, Prettier 설정
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 2024-03-XX
+- 기본 컴포넌트 구현
+  - ErrorBoundary 컴포넌트 추가
+  - Toast 컴포넌트 구현
+  - 공통 레이아웃 컴포넌트 개발
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### 2024-03-XX
+- 라우팅 시스템 구현
+  - React Router 설정
+  - 라우트 구조 정의
+  - 코드 스플리팅 적용
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### 2024-03-XX
+- 상태 관리 시스템 구축
+  - Redux 설정
+  - 기본 스토어 구조 정의
+  - 테마 상태 관리 구현
 
-## Learn More
+### 2024-03-XX
+- 스타일 시스템 구축
+  - styled-components 설정
+  - 글로벌 스타일 정의
+  - 테마 시스템 구현
+  - 반응형 디자인 적용
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 2024-03-XX
+- Sidebar 컴포넌트 개발
+  - 네비게이션 메뉴 구현
+  - 아이콘 통합
+  - 반응형 동작 구현
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🚀 시작하기
+
+### 설치
+
+## 📜 라이센스
+MIT License
+
+## 👥 기여자
+- [도승현]
+
+## 📞 문의
+- Email: [doshyun@gmail.com]
+- Issue: GitHub Issues를 통해 문의해주세요.

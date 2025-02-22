@@ -1,26 +1,58 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from 'react';
+import { ThemeProvider } from 'styled-components';
+import { RouterProvider } from 'react-router-dom';
+import { ToastProvider } from './components/common/Toast';
+import { useSelector } from 'react-redux';
+import theme from './styles/theme';
+import { RootState } from './store/store';
+import GlobalStyle from './styles/GlobalStyle';
+import { router } from './router/routes';
+import { ErrorBoundary } from './components/common/ErrorBoundary/ErrorBoundary';
+import './styles/fonts.css';
 
-function App() {
+const LoadingFallback = () => (
+  <div className="flex items-center justify-center min-h-screen">
+    로딩 중...
+  </div>
+);
+
+const App: React.FC = () => {
+  const isDarkMode = useSelector((state: RootState) => state.theme.isDarkMode);
+
+  // 다크모드 테마는 기본 테마를 기반으로 색상만 오버라이드
+  const currentTheme = isDarkMode
+    ? {
+        ...theme,
+        colors: {
+          ...theme.colors,
+          primary: '#0A84FF',
+          background: '#1A1A1A',
+          surface: '#2C2C2C',
+          text: '#FFFFFF',
+          textSecondary: '#A0A0A0',
+          border: '#404040',
+          error: '#FF453A',
+          success: '#32D74B',
+          warning: '#FFD60A',
+          info: '#64D2FF',
+          backgroundHover: '#363636',
+          sidebar: '#2C2C2C',
+        },
+      }
+    : theme;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ErrorBoundary>
+      <ThemeProvider theme={currentTheme}>
+        <GlobalStyle theme={currentTheme} />
+        <ToastProvider>
+          <Suspense fallback={<LoadingFallback />}>
+            <RouterProvider router={router} />
+          </Suspense>
+        </ToastProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
-}
+};
 
 export default App;
