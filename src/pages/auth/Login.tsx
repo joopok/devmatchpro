@@ -1,87 +1,176 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { TextField } from '../../components/common/TextField';
 import { postRequest } from '../../services/api/axios';
-import { LoginContainer, LoginCard, LoginHeader, Form, LoginButton, LoginFooter, StyledLink } from './Login.styles';
+import { 
+  LoginContainer, 
+  LoginCard, 
+  Form, 
+  LoginButton, 
+  LoginFooter, 
+  StyledLink, 
+  RememberMeWrapper,
+  LoginBackground,
+  LoginContent,
+  LoginLogo,
+  LoginDescription,
+  LoginFormWrapper,
+  SocialButtons,
+  SocialButton,
+  OrDivider,
+  TestimonialContent
+} from './Login.styles';
+import axios from 'axios';
 
 interface LoginFormData {
   username: string;
   password: string;
+  rememberMe: boolean;
 }
 
 const Login: React.FC = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting }
   } = useForm<LoginFormData>();
 
+  useEffect(() => {
+    const savedUsername = localStorage.getItem('savedUsername');
+    if (savedUsername) {
+      setValue('username', savedUsername);
+      setValue('rememberMe', true);
+    }
+  }, [setValue]);
+
   const onSubmit = async (data: LoginFormData) => {
-    console.log("data::::", data);
+    
     try {
-      const response = await postRequest('/auth/login', { username: 'test1', password: 'test1' });
-      //const response = await postRequest('/auth/login', { username: data.username, password: data.password });
-        console.log('응답 데이터:', response);
-      } catch (error) {
-        console.error('에러 발생:', error);
+      if (data.rememberMe) {
+        localStorage.setItem('savedUsername', data.username);
+      } else {
+        localStorage.removeItem('savedUsername');
       }
+
+      const response = await postRequest('/auth/login', {
+        username: data.username,
+        password: data.password
+      });
+
+      let access_token, username;
+      if (response.data) {
+        ({ access_token, username } = response.data);
+      } else if (response.data.access_token && response.data.username) {
+        ({ access_token, username } = response.data);
+      } else {
+        throw new Error('토큰 또는 사용자 정보가 응답에 없음');
+      }
+      
+      if (!access_token || !username) throw new Error('토큰 또는 유저 데이터가 undefined임');
+      
+      localStorage.setItem('access_token', access_token);
+      localStorage.setItem('user', JSON.stringify(username));
+      axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
+      window.location.href = '/dashboard';
+      
+    } catch (error) {
+      console.error('로그인 오류:', error);
+      alert('로그인 실패: ' + (error instanceof Error ? error.message : String(error)));
+    }
   };
 
   return (
     <LoginContainer>
-      <LoginCard>
-        <LoginHeader>
-          <h2>로그인</h2>
-          <p>계정에 로그인하세요</p>
-        </LoginHeader>
-        
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <TextField
-            label="이메일"
-            {...register('username', {
-              required: '아이디를 입력하세요',
-              // pattern: {
-              //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              //   message: '올바른 이메일 형식이 아닙니다'
-              // }
-            })}
-            error={errors.username?.message}
-            style={{
-              color: errors.username ? '#ff0000' : '#000000'
-            }}
-          />
-          
-          <TextField
-            label="비밀번호" 
-            type="password"
-            {...register('password', {
-              required: '비밀번호를 입력하세요',
-              minLength: {
-                value: 4,
-                message: '비밀번호는 8자 이상이어야 합니다'
-              }
-            })}
-            error={errors.password?.message}
-            style={{
-              color: errors.password ? '#ff0000' : '#000000'
-            }}
-          />
+      <LoginBackground>
+        <TestimonialContent>
+          <h2>"</h2>
+          <p>This template was just what we were after; its modern, works perfectly and is visually beautiful, we couldn't be happier.</p>
+          <div className="author">— Richard, AppStack User</div>
+        </TestimonialContent>
+      </LoginBackground>
+      
+      <LoginContent>
+        <LoginLogo src="/assets/img/logo.svg" alt="Logo" />
+        <LoginDescription>
+          <h1>Welcome back!</h1>
+          <p>Sign in to your account to continue</p>
+        </LoginDescription>
 
-          <LoginButton 
-            type="submit"
-            disabled={isSubmitting}
-            fullWidth
-          >
-            {isSubmitting ? '로그인 중...' : '로그인'}
-          </LoginButton>
-        </Form>
+        <LoginCard>
+          <LoginFormWrapper>
+            <SocialButtons>
+              <SocialButton $provider="facebook">
+                Continue with Facebook
+              </SocialButton>
+              <SocialButton $provider="google">
+                Continue with Google
+              </SocialButton>
+              <SocialButton $provider="apple">
+                Continue with Apple
+              </SocialButton>
+            </SocialButtons>
 
-        <LoginFooter>
-          <p>
-            계정이 없으신가요? <StyledLink to="/register">회원가입</StyledLink>
-          </p>
-        </LoginFooter>
-      </LoginCard>
+            <OrDivider>
+              <span>OR</span>
+            </OrDivider>
+
+            <Form onSubmit={handleSubmit(onSubmit)}>
+              <TextField
+                label="Email"
+                placeholder="Enter your email"
+                {...register('username', {
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: 'Invalid email address'
+                  }
+                })}
+                error={errors.username?.message}
+              />
+              
+              <TextField
+                label="Password"
+                type="password"
+                placeholder="Enter your password"
+                {...register('password', {
+                  required: 'Password is required',
+                  minLength: {
+                    value: 4,
+                    message: 'Password must be at least 4 characters'
+                  }
+                })}
+                error={errors.password?.message}
+              />
+
+              <RememberMeWrapper>
+                <label>
+                  <input
+                    type="checkbox"
+                    {...register('rememberMe')}
+                  />
+                  <span>Remember me</span>
+                </label>
+                <StyledLink to="/forgot-password">Forgot password?</StyledLink>
+              </RememberMeWrapper>
+
+              <LoginButton 
+                type="submit"
+                disabled={isSubmitting}
+                $fullWidth
+              >
+                {isSubmitting ? 'Signing in...' : 'Sign in'}
+              </LoginButton>
+            </Form>
+
+            <LoginFooter>
+              <p>
+                Don't have an account? <StyledLink to="/register">Sign up</StyledLink>
+              </p>
+            </LoginFooter>
+          </LoginFormWrapper>
+        </LoginCard>
+      </LoginContent>
     </LoginContainer>
   );
 };

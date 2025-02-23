@@ -8,7 +8,7 @@ import { Button } from '../../../common/Button';
 import styled from 'styled-components';
 
 interface LoginFormData {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -40,15 +40,15 @@ export const LoginForm: React.FC = () => {
         
         <InputGroup>
           <TextField
-            label="이메일"
-            {...register('email', {
-              required: '이메일을 입력해주세요',
+            label="아이디"
+            {...register('username', {
+              required: '아이디를 입력해주세요',
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                 message: '올바른 이메일 형식이 아닙니다',
               },
             })}
-            error={errors.email?.message}
+            error={errors.username?.message}
           />
         </InputGroup>
 

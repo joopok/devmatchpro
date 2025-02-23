@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Icon } from '../../../assets/Icon';
+import { Icon } from '../../assets/Icon/Icon';
 
 interface ProjectMetaProps {
   icon: React.ReactNode;

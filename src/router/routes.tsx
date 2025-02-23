@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { createBrowserRouter, RouteObject } from 'react-router-dom';
+import { RouteObject } from 'react-router-dom';
 import { Layout } from '../components/layout/Layout';
 import Dashboard from '../pages/dashboard';
 import { PrivateRoute } from '../components/auth/PrivateRoute';
@@ -108,4 +108,4 @@ const routes: RouteObject[] = [
   },
 ];
 
-export const router = createBrowserRouter(routes); 
+export { routes }; 

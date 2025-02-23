@@ -26,10 +26,10 @@ const DEMO_USER: AuthUser = {
 };
 
 export const authApi = {
-  login: async (credentials: { email: string; password: string }): Promise<{ data: AuthResponse }> => {
+  login: async (credentials: { username: string; password: string }): Promise<{ data: AuthResponse }> => {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    if (credentials.email === DEMO_USER.email && credentials.password === DEMO_USER.password) {
+    if (credentials.username === DEMO_USER.email && credentials.password === DEMO_USER.password) {
       const { password, ...userWithoutPassword } = DEMO_USER;
       return {
         data: {

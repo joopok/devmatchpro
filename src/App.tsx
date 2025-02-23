@@ -1,12 +1,12 @@
 import React, { Suspense } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { RouterProvider } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { ToastProvider } from './components/common/Toast';
 import { useSelector } from 'react-redux';
 import theme from './styles/theme';
 import { RootState } from './store/store';
 import GlobalStyle from './styles/GlobalStyle';
-import { router } from './router/routes';
+import { routes } from './router/routes';
 import { ErrorBoundary } from './components/common/ErrorBoundary/ErrorBoundary';
 import './styles/fonts.css';
 
@@ -41,13 +41,19 @@ const App: React.FC = () => {
       }
     : theme;
 
+  const browserRouter = createBrowserRouter(routes, {
+    future: {
+      v7_normalizeFormMethod: true,
+    },
+  });
+
   return (
     <ErrorBoundary>
       <ThemeProvider theme={currentTheme}>
         <GlobalStyle theme={currentTheme} />
         <ToastProvider>
           <Suspense fallback={<LoadingFallback />}>
-            <RouterProvider router={router} />
+            <RouterProvider router={browserRouter} />
           </Suspense>
         </ToastProvider>
       </ThemeProvider>

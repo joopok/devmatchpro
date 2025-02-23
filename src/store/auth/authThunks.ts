@@ -11,7 +11,7 @@ interface AuthResponse {
 
 export const login = createAsyncThunk<
   User,
-  { email: string; password: string }
+  { username: string; password: string }
 >('auth/login', async (credentials, { dispatch }) => {
   try {
     dispatch(setLoading(true));
