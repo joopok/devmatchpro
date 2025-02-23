@@ -3,11 +3,11 @@ import { RouteObject } from 'react-router-dom';
 import { PrivateRoute } from '../components/auth/PrivateRoute';
 import { createElement } from 'react';
 
-const Home = lazy(() => import('../pages/Home'));
+const Home = lazy(() => import('../pages/Home/Home'));
 const Login = lazy(() => import('../pages/auth/Login'));
 const Register = lazy(() => import('../pages/auth/Register'));
-const Dashboard = lazy(() => import('../pages/dashboard'));
-const Profile = lazy(() => import('../pages/auth/Profile')); // Profile 컴포넌트 import 추가
+const Dashboard = lazy(() => import('../pages/Dashboard'));
+const Profile = lazy(() => import('../pages/auth/Profile'));
 
 export const routes: RouteObject[] = [
   {

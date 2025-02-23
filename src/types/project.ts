@@ -12,30 +12,21 @@ export interface Budget {
 }
 
 export interface Project extends BaseEntity {
+  id: string;
   title: string;
   description: string;
   status: ProjectStatus;
   priority: Priority;
-  startDate: string;
-  endDate?: string;
-  budget: {
-    min: number;
-    max: number;
-    currency: string;
-  };
-  workType: WorkType;
-  location?: string;
-  requiredSkills: string[];
   duration: {
     start: string;
     end?: string;
   };
-  tags: string[];
+  budget: Budget;
+  workType: WorkType;
+  location?: string;
+  requiredSkills: string[];
   teamSize?: number;
-  owner?: UserProfile;
-  team?: UserProfile[];
-  progress?: number;
-  category?: string;
+  isDeleted: boolean;
 }
 
 export interface ProjectFormData {

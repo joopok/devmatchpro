@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
 import { createBrowserRouter, Outlet } from 'react-router-dom';
-import { Layout } from '../components/layout/Layout';
+import { Layout } from '../pages/layout/Layout';
 import { PrivateRoute } from './PrivateRoute';
 import { projectApi } from '../services/api/project';
 
-const Home = React.lazy(() => import('../pages/Home'));
+const Home = React.lazy(() => import('../pages/Home/Home'));
 const Projects = React.lazy(() => import('../pages/Projects'));
 const Analytics = React.lazy(() => import('../pages/Analytics'));
 const Users = React.lazy(() => import('../pages/Users'));

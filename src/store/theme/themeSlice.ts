@@ -1,11 +1,22 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ThemeState {
   isDarkMode: boolean;
 }
 
+// localStorage에서 theme 값을 가져오는 함수
+const getInitialTheme = (): boolean => {
+  const savedTheme = localStorage.getItem('theme');
+  if (!savedTheme) {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    localStorage.setItem('theme', prefersDark ? 'dark' : 'light');
+    return prefersDark;
+  }
+  return savedTheme === 'dark';
+};
+
 const initialState: ThemeState = {
-  isDarkMode: false,
+  isDarkMode: getInitialTheme(),
 };
 
 const themeSlice = createSlice({
@@ -14,12 +25,15 @@ const themeSlice = createSlice({
   reducers: {
     toggleTheme: (state) => {
       state.isDarkMode = !state.isDarkMode;
+      localStorage.setItem('theme', state.isDarkMode ? 'dark' : 'light');
     },
-    setDarkMode: (state, action: { payload: boolean }) => {
+    setTheme: (state, action: PayloadAction<boolean>) => {
       state.isDarkMode = action.payload;
+      localStorage.setItem('theme', action.payload ? 'dark' : 'light');
     },
   },
 });
 
-export const { toggleTheme, setDarkMode } = themeSlice.actions;
+// 두 액션 모두 export
+export const { toggleTheme, setTheme } = themeSlice.actions;
 export default themeSlice.reducer; 

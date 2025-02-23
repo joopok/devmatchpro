@@ -82,9 +82,9 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({
         <Section>
           <SectionTitle>프로젝트 기간</SectionTitle>
           <p>
-            시작일: {new Date(project.startDate).toLocaleDateString()}
-            {project.endDate && 
-              ` ~ 종료일: ${new Date(project.endDate).toLocaleDateString()}`}
+            시작일: {new Date(project.duration.start).toLocaleDateString()}
+            {project.duration.end && 
+              ` ~ 종료일: ${new Date(project.duration.end).toLocaleDateString()}`}
           </p>
         </Section>
 

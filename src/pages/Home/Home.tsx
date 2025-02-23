@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { LineChart, BarChart, PieChart } from '../components/common/Charts';
-import { Card } from '../components/common/Card';
-import { useAuth } from '../hooks/useAuth';
+import { LineChart, BarChart, PieChart } from '../../components/common/Charts';
+import { Card } from '../../components/common/Card';
+import { useAuth } from '../../hooks/useAuth';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import { ProjectStatus } from '../../types/project';
 
 // 스타일 컴포넌트
 const DashboardContainer = styled.div`
@@ -43,11 +44,12 @@ const GridSection = styled.div`
 `;
 
 interface Project {
-  id: number;
+  id: string;
   name: string;
+  title: string;
   company: string;
   author: string;
-  status: string;
+  status: ProjectStatus;
 }
 
 interface ProjectItemProps {
@@ -166,11 +168,12 @@ const Home: React.FC = () => {
 const ProjectList: React.FC = () => {
   const projects: Project[] = [
     {
-      id: 1,
+      id: '1',
       name: 'Project Apollo',
+      title: 'Project Apollo',
       company: 'Spacex',
       author: 'Chris Jenkins',
-      status: 'In Progress'
+      status: 'IN_PROGRESS'
     },
     // ... 더 많은 프로젝트
   ];

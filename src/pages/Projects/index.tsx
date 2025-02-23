@@ -9,7 +9,7 @@ const ProjectsContainer = styled.div`
 const Projects = () => {
   return (
     <ProjectsContainer>
-      <h1>프로젝트</h1>
+      <h1>프로젝트111</h1>
       <ProjectList />
     </ProjectsContainer>
   );

@@ -13,7 +13,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
       <Header />
       <div className="flex flex-1">
         <Sidebar />
-      <Content>
+        <Content>
           {children}
         </Content>
       </div>

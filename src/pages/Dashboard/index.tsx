@@ -178,26 +178,57 @@ const ErrorMessage = styled.div`
   padding: 2rem;
 `;
 
+interface ProjectFromStore {
+  id?: string;
+  title?: string;
+  description?: string;
+  status?: string;
+  priority?: string;
+  workType?: string;
+  location?: string;
+  budget?: {
+    min: number;
+    max: number;
+    currency: string;
+  };
+  duration?: {
+    start: string;
+    end?: string;
+  };
+  requiredSkills?: string[];
+  teamSize?: number;
+}
+
 const Dashboard: React.FC = () => {
   const { projects: projectsFromStore, isLoading, error } = useSelector((state: RootState) => state.project);
 
-  const projects: Project[] = projectsFromStore.map(p => ({
-    ...p,
-    startDate: new Date().toISOString(),
-    endDate: undefined,
-    budget: { min: 0, max: 0, currency: 'KRW' },
-    workType: 'REMOTE' as WorkType,
-    priority: 'MEDIUM' as Priority,
-    requiredSkills: [],
-    duration: {
-      start: new Date().toISOString(),
-      end: undefined
-    },
-    tags: [],
-    teamSize: undefined,
-    status: 'OPEN' as ProjectStatus,
-    isDeleted: false
-  }));
+  const projects: Project[] = (projectsFromStore as ProjectFromStore[]).map(p => {
+    const project: Project = {
+      id: p.id || '',
+      title: p.title || '',
+      description: p.description || '',
+      status: (p.status as ProjectStatus) || 'PLANNING',
+      priority: (p.priority as Priority) || 'MEDIUM',
+      duration: {
+        start: p.duration?.start || new Date().toISOString(),
+        end: p.duration?.end
+      },
+      budget: {
+        min: p.budget?.min || 0,
+        max: p.budget?.max || 0,
+        currency: p.budget?.currency || 'KRW'
+      },
+      workType: (p.workType as WorkType) || 'REMOTE',
+      location: p.location,
+      requiredSkills: p.requiredSkills || [],
+      teamSize: p.teamSize || 1,
+      isDeleted: false,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+
+    return project;
+  });
 
   const handleTaskMove = (taskId: string, sourceId: string, destinationId: string) => {
     console.log('Task moved:', { taskId, sourceId, destinationId });

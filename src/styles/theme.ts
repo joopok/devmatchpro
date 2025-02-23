@@ -1,44 +1,29 @@
 export interface ThemeColors {
   primary: string;
   primaryDark: string;
-  background: string;
-  surface: string;
-  text: string;
-  textSecondary: string;
-  border: string;
-  error: string;
-  errorDark: string;
-  success: string;
-  warning: string;
-  info: string;
-  backgroundHover: string;
-  sidebar: string;
-  sidebarText: string;
   secondary: string;
   secondaryDark: string;
+  success: string;
+  danger: string;
+  warning: string;
+  info: string;
+  light: string;
+  dark: string;
+  gray: {
+    [key: number]: string;
+  };
+  text: string;
+  textSecondary: string;
+  background: string;
+  surface: string;
+  border: string;
+  sidebar: string;
+  sidebarText: string;
+  backgroundHover: string;
 }
 
 export interface Theme {
-  colors: {
-    primary: string;
-    secondary: string;
-    success: string;
-    danger: string;
-    warning: string;
-    info: string;
-    light: string;
-    dark: string;
-    gray: {
-      [key: number]: string;
-    };
-    text: string;
-    textSecondary: string;
-    background: string;
-    border: string;
-    sidebar: string;
-    sidebarText: string;
-    backgroundHover: string;
-  };
+  colors: ThemeColors;
   isDarkMode: boolean;
   spacing: {
     xs: string;
@@ -110,10 +95,22 @@ export interface Theme {
   borderRadius: number;
 }
 
-export const theme: Theme = {
+const getInitialTheme = (): boolean => {
+  const savedTheme = localStorage.getItem('theme');
+  if (!savedTheme) {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    localStorage.setItem('theme', prefersDark ? 'dark' : 'light');
+    return prefersDark;
+  }
+  return savedTheme === 'dark';
+};
+
+export const theme = {
   colors: {
     primary: '#0066ff',
+    primaryDark: '#0052cc',
     secondary: '#6c757d',
+    secondaryDark: '#5a6268',
     success: '#28a745',
     danger: '#dc3545',
     warning: '#ffc107',
@@ -135,12 +132,13 @@ export const theme: Theme = {
     text: '#212529',
     textSecondary: '#6c757d',
     background: '#ffffff',
+    surface: '#ffffff',
     border: '#dee2e6',
     sidebar: '#343a40',
     sidebarText: '#ffffff',
     backgroundHover: '#e2e6ea',
   },
-  isDarkMode: false,
+  isDarkMode: getInitialTheme(),
   spacing: {
     xs: '4px',
     sm: '8px',
@@ -160,7 +158,7 @@ export const theme: Theme = {
     fontSize: {
       xs: '0.75rem',
       sm: '0.875rem',
-      base: '1rem',
+      base: '16px',
       lg: '1.125rem',
       xl: '1.25rem',
       '2xl': '1.5rem',
@@ -209,6 +207,8 @@ export const theme: Theme = {
     lg: '0 10px 15px rgba(0, 0, 0, 0.05)',
   },
   borderRadius: 8,
-};
+} as const;
+
+export type ThemeType = typeof theme;
 
 export default theme;

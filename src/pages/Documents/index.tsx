@@ -3,7 +3,7 @@ import React from 'react';
 const Documents: React.FC = () => {
   return (
     <div>
-      <h1>문서</h1>
+      <h1>문서1111ㅇㅇㅇㅇ</h1>
     </div>
   );
 };

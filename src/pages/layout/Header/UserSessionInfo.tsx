@@ -53,7 +53,7 @@ export const UserSessionInfo: React.FC = () => {
   return (
     <>
       <UserContainer onClick={handleClick}>
-        <Avatar src={user?.avatar || '/assets/img/avatars/default.png'} alt={user?.username} />
+        <Avatar src={user?.avatar || '/assets/img/avatars/avatar.jpg'} alt={user?.username} />
         <UserInfo>
           <UserName>{user?.username}</UserName>
           <UserRole>{user?.role}</UserRole>

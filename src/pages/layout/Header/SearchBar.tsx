@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SearchIcon } from '../../common/Icons';
+import { SearchIcon } from '../../../components/common/Icons';
 
 const SearchContainer = styled.div`
   position: relative;

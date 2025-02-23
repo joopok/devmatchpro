@@ -18,7 +18,8 @@ const MainContent = styled.main`
 const ContentWrapper = styled.div`
   flex: 1;
   padding: 24px;
-  background: ${({ theme }) => theme.colors.background};
+  background: ${({ theme }) => theme.isDarkMode ? '#202634' : '#fff'};
+  transition: background-color 0.3s ease;
 `;
 
 interface LayoutProps {

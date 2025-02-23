@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BellIcon } from '../../common/Icons';
+import { BellIcon } from '../../../components/common/Icons';
 
 const BellContainer = styled.button`
   position: relative;
