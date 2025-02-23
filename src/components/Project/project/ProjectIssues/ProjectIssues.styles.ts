@@ -88,7 +88,7 @@ export const FilterSection = styled.div`
   }
 `;
 
-export default {
+const styles = {
   IssuesContainer,
   IssuesList,
   IssueItem,
@@ -98,3 +98,5 @@ export default {
   AddIssueForm,
   FilterSection,
 };
+
+export default styles;

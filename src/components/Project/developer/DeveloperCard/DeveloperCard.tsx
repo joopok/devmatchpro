@@ -37,8 +37,8 @@ export const DeveloperCard: React.FC<DeveloperCardProps> = ({
       <Header>
         <Avatar
           src={developer.profileImage}
-          name={developer.name}
-          alt={developer.name}
+          name={developer.username}
+          alt={developer.username}
           size="large"
         />
         <Info>

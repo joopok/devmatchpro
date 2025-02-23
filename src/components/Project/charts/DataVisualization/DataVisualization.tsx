@@ -126,14 +126,21 @@ export const DataVisualization: React.FC<DataVisualizationProps> = ({
       case 'pie':
         return (
           <PieChart
-            data={data.map(point => ({
-              name: point.label || '미분류',
-              value: point.value,
-            }))}
-            height={300}
-          >
-            <div />
-          </PieChart>
+            data={{
+              labels: data.map(point => point.label || '미분류'),
+              datasets: [{
+                data: data.map(point => point.value),
+                backgroundColor: [
+                  '#0066ff',
+                  '#ff4405',
+                  '#ffd600',
+                  '#00b884',
+                  '#6c757d',
+                  '#dc3545'
+                ]
+              }]
+            }}
+          />
         );
       default:
         return null;

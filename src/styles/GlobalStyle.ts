@@ -1,7 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
 import { Theme } from './theme';
 
-const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
+interface GlobalStyleProps {
+  theme: Theme;
+}
+
+const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
   * {
     margin: 0;
     padding: 0;
@@ -10,10 +14,15 @@ const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
   }
 
   body {
+    margin: 0;
+    padding: 0;
     background: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};
-    line-height: 1.5;
-    font-size: ${({ theme }) => theme.typography.fontSize.base};
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   a {

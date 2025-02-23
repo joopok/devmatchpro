@@ -31,14 +31,20 @@ export const ProjectMetrics: React.FC<ProjectMetricsProps> = ({ projects }) => {
         </CardHeader>
         <CardContent>
           <PieChart
-            data={projectStats?.statusDistribution.map(item => ({
-              name: item.status,
-              value: item.count,
-            })) || []}
-            height={300}
-          >
-            {/* 차트 내용 */}
-          </PieChart>
+            data={{
+              labels: projectStats?.statusDistribution.map(item => item.status) || [],
+              datasets: [{
+                data: projectStats?.statusDistribution.map(item => item.count) || [],
+                backgroundColor: [
+                  '#0066ff', // In Progress
+                  '#28a745', // Completed
+                  '#ffc107', // On Hold
+                  '#dc3545', // Cancelled
+                  '#6c757d'  // Other
+                ]
+              }]
+            }}
+          />
         </CardContent>
       </Card>
 

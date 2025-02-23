@@ -8,8 +8,7 @@ import {
   Title,
   Tooltip,
   Legend,
-  ChartData,
-  ChartOptions
+  Filler
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
@@ -20,53 +19,32 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 );
 
-interface Dataset {
-  label: string;
-  data: number[];
-  color: string;
-}
-
 interface LineChartProps {
-  data: {
-    labels: string[];
-    datasets: Dataset[];
-  };
+  data: any;
 }
 
 export const LineChart: React.FC<LineChartProps> = ({ data }) => {
-  const chartData: ChartData<'line'> = {
-    labels: data.labels,
-    datasets: data.datasets.map(dataset => ({
-      label: dataset.label,
-      data: dataset.data,
-      borderColor: dataset.color,
-      backgroundColor: `${dataset.color}33`,
-      tension: 0.4,
-      fill: false,
-    })),
-  };
-
-  const options: ChartOptions<'line'> = {
+  const options = {
     responsive: true,
-    maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top',
+        display: false
+      },
+      tooltip: {
+        mode: 'index' as const,
+        intersect: false,
       },
     },
     scales: {
       y: {
-        beginAtZero: true,
-      },
-    },
+        beginAtZero: true
+      }
+    }
   };
 
-  return (
-    <div style={{ width: '100%', height: '300px' }}>
-      <Line data={chartData} options={options} />
-    </div>
-  );
+  return <Line options={options} data={data} />;
 }; 

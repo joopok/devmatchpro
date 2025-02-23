@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Input } from '../../../common/Input';
 import { Button } from '../../../common/Button';
 import { Tag } from '../../../common/Tag';
 import {
@@ -8,8 +7,6 @@ import {
   IssueItem,
   IssueHeader,
   IssueContent,
-  IssueFooter,
-  AddIssueForm,
   FilterSection,
 } from './ProjectIssues.styles';
 

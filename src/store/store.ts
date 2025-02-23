@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
+import themeReducer from './theme/themeSlice';
 import authReducer, { AuthState } from './auth/authSlice';
 import projectReducer from './slices/projectSlice';
-import themeReducer from './slices/themeSlice';
 
 export const store = configureStore({
   reducer: {
+    theme: themeReducer,
     auth: authReducer,
     project: projectReducer,
-    theme: themeReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -19,7 +19,27 @@ export interface ThemeColors {
 }
 
 export interface Theme {
-  colors: ThemeColors;
+  colors: {
+    primary: string;
+    secondary: string;
+    success: string;
+    danger: string;
+    warning: string;
+    info: string;
+    light: string;
+    dark: string;
+    gray: {
+      [key: number]: string;
+    };
+    text: string;
+    textSecondary: string;
+    background: string;
+    border: string;
+    sidebar: string;
+    sidebarText: string;
+    backgroundHover: string;
+  };
+  isDarkMode: boolean;
   spacing: {
     xs: string;
     sm: string;
@@ -92,24 +112,35 @@ export interface Theme {
 
 export const theme: Theme = {
   colors: {
-    primary: '#007bff',
-    primaryDark: '#0056b3',
-    background: '#f8f9fa',
-    surface: '#ffffff',
-    text: '#212529',
-    textSecondary: '#6c757d',
-    border: '#dee2e6',
-    error: '#dc3545',
-    errorDark: '#bd2130',
+    primary: '#0066ff',
+    secondary: '#6c757d',
     success: '#28a745',
+    danger: '#dc3545',
     warning: '#ffc107',
     info: '#17a2b8',
-    backgroundHover: '#e2e6ea',
+    light: '#f8f9fa',
+    dark: '#343a40',
+    gray: {
+      50: '#f8f9fa',
+      100: '#e9ecef',
+      200: '#dee2e6',
+      300: '#ced4da',
+      400: '#adb5bd',
+      500: '#6c757d',
+      600: '#495057',
+      700: '#343a40',
+      800: '#212529',
+      900: '#1a1a1a',
+    },
+    text: '#212529',
+    textSecondary: '#6c757d',
+    background: '#ffffff',
+    border: '#dee2e6',
     sidebar: '#343a40',
     sidebarText: '#ffffff',
-    secondary: '#5856D6',
-    secondaryDark: '#4240ac',
+    backgroundHover: '#e2e6ea',
   },
+  isDarkMode: false,
   spacing: {
     xs: '4px',
     sm: '8px',

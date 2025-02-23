@@ -1,6 +1,6 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
 import { RootState } from '../../../../store/store';
 import { Button } from '../../../common/Button';
 import { Input } from '../../../common/Input';
@@ -18,16 +18,20 @@ import { useAuth } from '../../../../hooks/useAuth';
 interface User {
   name?: string;
   bio?: string;
-  role?: string;
+  username?: string;
+  email?: string;
   githubUrl?: string;
+  role?: string;
   portfolioUrl?: string;
 }
 
 interface ProfileFormData {
   name?: string;
   bio?: string;
-  role?: string;
+  username?: string;
+  email?: string;
   githubUrl?: string;
+  role?: string;
   portfolioUrl?: string;
 }
 
@@ -41,7 +45,7 @@ export const ProfileEdit: React.FC = () => {
     formState: { errors },
   } = useForm<ProfileFormData>({
     defaultValues: {
-      name: user?.name || '',
+      name: user?.username || '',
       bio: user?.bio || '',
       role: user?.role || '',
       githubUrl: user?.githubUrl || '',

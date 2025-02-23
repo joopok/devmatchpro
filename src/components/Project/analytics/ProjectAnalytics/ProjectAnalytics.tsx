@@ -169,14 +169,21 @@ export const ProjectAnalytics: React.FC<ProjectAnalyticsProps> = ({
         <ChartCard>
           <h3>카테고리별 분포</h3>
           <PieChart
-            data={metrics.categoryDistribution.map(item => ({
-              name: item.category,
-              value: item.count
-            }))}
-            height={300}
-          >
-            {/* 차트 내용 */}
-          </PieChart>
+            data={{
+              labels: metrics.categoryDistribution.map(item => item.category),
+              datasets: [{
+                data: metrics.categoryDistribution.map(item => item.count),
+                backgroundColor: [
+                  '#0066ff',
+                  '#ff4405',
+                  '#ffd600',
+                  '#00b884',
+                  '#6c757d',
+                  '#dc3545'
+                ]
+              }]
+            }}
+          />
         </ChartCard>
       </ChartSection>
 

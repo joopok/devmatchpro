@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { store } from '../../store/store';
+import { logout } from '../../store/auth/authSlice';
 
 // 공통 axios 인스턴스 생성
 export const api = axios.create({
@@ -6,7 +8,7 @@ export const api = axios.create({
   timeout: 10000, // 요청 타임아웃 (10초)
   headers: {
     'Content-Type': 'application/json', // 기본 헤더 설정
-    //'Authorization': 'Bearer YOUR_TOKEN' // 필요 시 토큰 추가
+    'Authorization': `Bearer ${localStorage.getItem('access_token') || ''}` // 로컬 스토리지에서 토큰 가져오기
   },
 });
 
@@ -37,6 +39,11 @@ api.interceptors.response.use(
     } else {
       console.error('네트워크 에러:', error.message);
     }
+    if (error.response?.status === 401) {
+      // 토큰이 만료되었거나 유효하지 않은 경우
+      store.dispatch(logout());
+      window.location.href = '/login';
+    }
     return Promise.reject(error);
   }
 );
@@ -48,17 +55,6 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
-
-api.interceptors.response.use(
-  (response) => response,
-  async (error: any) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      window.location.href = '/login';
-    }
-    return Promise.reject(error);
-  }
-);
 
 // 공통 HTTP 메서드 정의
 export const getRequest = (url: string, params = {}) => {

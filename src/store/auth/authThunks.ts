@@ -1,12 +1,19 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { authApi } from '../../services/api/auth';
-import { setUser, setToken, setLoading, setError } from './authSlice';
+import { setUser, setToken, setLoading, setError, STORAGE_KEYS } from './authSlice';
 import type { User } from '../../types/user';
 import type { RootState } from '../store';
 
 interface AuthResponse {
   user: User;
   token: string;
+}
+
+interface SignupRequest {
+  email: string;
+  password: string;
+  username: string;
+  role: 'DEVELOPER' | 'CLIENT';
 }
 
 export const login = createAsyncThunk<
@@ -17,16 +24,18 @@ export const login = createAsyncThunk<
     dispatch(setLoading(true));
     dispatch(setError(null));
     
-    console.log('로그인 요청:', credentials); // 디버깅용
     const { data } = await authApi.login(credentials);
-    console.log('로그인 응답:', data); // 디버깅용
     
+    // 로컬 스토리지에 저장
+    localStorage.setItem(STORAGE_KEYS.TOKEN, data.token);
+    localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(data.user));
+    
+    // Redux store에 저장
     dispatch(setUser(data.user));
     dispatch(setToken(data.token));
     
     return data.user;
   } catch (error) {
-    console.error('로그인 에러:', error); // 디버깅용
     const errorMessage = error instanceof Error ? error.message : '로그인 중 오류가 발생했습니다';
     dispatch(setError(errorMessage));
     throw new Error(errorMessage);
@@ -37,7 +46,7 @@ export const login = createAsyncThunk<
 
 export const signup = createAsyncThunk<
   User,
-  { email: string; password: string; name: string; role: 'DEVELOPER' | 'CLIENT' },
+  SignupRequest,
   { state: RootState }
 >('auth/signup', async (data, { dispatch }) => {
   try {

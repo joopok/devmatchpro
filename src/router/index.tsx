@@ -1,26 +1,95 @@
 import React, { Suspense } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { Layout } from '../components/layout/Layout';
 import { PrivateRoute } from './PrivateRoute';
 import { projectApi } from '../services/api/project';
 
-const ProjectList = React.lazy(() => import('../pages/projects/ProjectList'));
-const ProjectDetail = React.lazy(() => import('../pages/projects/ProjectDetail'));
-const TeamList = React.lazy(() => import('../pages/teams/TeamList'));
-const TeamDetail = React.lazy(() => import('../pages/teams/TeamDetail'));
-const Settings = React.lazy(() => import('../pages/settings/Settings'));
+const Home = React.lazy(() => import('../pages/Home'));
+const Projects = React.lazy(() => import('../pages/Projects'));
+const Analytics = React.lazy(() => import('../pages/Analytics'));
+const Users = React.lazy(() => import('../pages/Users'));
+const Calendar = React.lazy(() => import('../pages/Calendar'));
+const Documents = React.lazy(() => import('../pages/Documents'));
+const Settings = React.lazy(() => import('../pages/Settings'));
+const ProjectList = React.lazy(() => import('../pages/Projects/ProjectList'));
+const ProjectDetail = React.lazy(() => import('../pages/Projects/ProjectDetail'));
+const TeamList = React.lazy(() => import('../pages/Teams/TeamList'));
+const TeamDetail = React.lazy(() => import('../pages/Teams/TeamDetail'));
 const Login = React.lazy(() => import('../pages/auth/Login'));
 const Register = React.lazy(() => import('../pages/auth/Register'));
+const Profile = React.lazy(() => import('../pages/auth/Profile'));
+
+const PageLoading = () => <div>페이지 로딩중...</div>;
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,
+    element: (
+      <Layout>
+        <Outlet />
+      </Layout>
+    ),
     children: [
+      {
+        path: '/',
+        element: (
+          <Suspense fallback={<PageLoading />}>
+            <Home />
+          </Suspense>
+        ),
+      },
       {
         path: 'projects',
         element: (
-          <Suspense fallback={<div>로딩중...</div>}>
+          <Suspense fallback={<PageLoading />}>
+            <Projects />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'analytics',
+        element: (
+          <Suspense fallback={<PageLoading />}>
+            <Analytics />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'users',
+        element: (
+          <Suspense fallback={<PageLoading />}>
+            <Users />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'calendar',
+        element: (
+          <Suspense fallback={<PageLoading />}>
+            <Calendar />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'documents',
+        element: (
+          <Suspense fallback={<PageLoading />}>
+            <Documents />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'settings',
+        element: (
+          <Suspense fallback={<PageLoading />}>
+            <Settings />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'projects',
+        element: (
+          <Suspense fallback={<PageLoading />}>
             <ProjectList />
           </Suspense>
         ),
@@ -36,7 +105,7 @@ export const router = createBrowserRouter([
       {
         path: 'projects/:id',
         element: (
-          <Suspense fallback={<div>로딩중...</div>}>
+          <Suspense fallback={<PageLoading />}>
             <PrivateRoute>
               <ProjectDetail />
             </PrivateRoute>
@@ -46,7 +115,7 @@ export const router = createBrowserRouter([
       {
         path: 'teams',
         element: (
-          <Suspense fallback={<div>로딩중...</div>}>
+          <Suspense fallback={<PageLoading />}>
             <PrivateRoute>
               <TeamList />
             </PrivateRoute>
@@ -56,7 +125,7 @@ export const router = createBrowserRouter([
       {
         path: 'teams/:id',
         element: (
-          <Suspense fallback={<div>로딩중...</div>}>
+          <Suspense fallback={<PageLoading />}>
             <PrivateRoute>
               <TeamDetail />
             </PrivateRoute>
@@ -64,11 +133,11 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: 'settings',
+        path: 'profile',
         element: (
-          <Suspense fallback={<div>로딩중...</div>}>
+          <Suspense fallback={<PageLoading />}>
             <PrivateRoute>
-              <Settings />
+              <Profile />
             </PrivateRoute>
           </Suspense>
         ),
@@ -78,7 +147,7 @@ export const router = createBrowserRouter([
   {
     path: '/login',
     element: (
-      <Suspense fallback={<div>로딩중...</div>}>
+      <Suspense fallback={<PageLoading />}>
         <Login />
       </Suspense>
     ),
@@ -86,7 +155,7 @@ export const router = createBrowserRouter([
   {
     path: '/register',
     element: (
-      <Suspense fallback={<div>로딩중...</div>}>
+      <Suspense fallback={<PageLoading />}>
         <Register />
       </Suspense>
     ),

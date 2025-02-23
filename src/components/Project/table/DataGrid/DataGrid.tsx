@@ -3,7 +3,7 @@ import { Input } from '../../../common/Input';
 import { Select } from '../../../common/Select';
 import { Checkbox } from '../../../common/Checkbox';
 import { Button } from '../../../common/Button';
-import { Icon } from '../../../../../assets/Icon';
+import { Icon } from '../../../../assets/Icon';
 import {
   GridContainer,
   TableHeader,

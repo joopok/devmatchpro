@@ -32,7 +32,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
       <Header>
         <Avatar src={profile.profileImage || '/default-avatar.png'} alt="Profile" />
         <UserInfo>
-          <Name>{profile.name}</Name>
+          <Name>{profile.username}</Name>
           <Role>{profile.role}</Role>
         </UserInfo>
         {isOwnProfile && (

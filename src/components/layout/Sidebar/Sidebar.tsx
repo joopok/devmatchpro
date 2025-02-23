@@ -1,90 +1,93 @@
 import React from 'react';
-import { IconType, IconBaseProps } from 'react-icons';
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 import { 
-  FiHome,
-  FiPieChart, 
-  FiGrid,
-  FiMessageSquare,
-  FiCalendar,
-  FiUsers,
-  FiShoppingCart,
-  FiFileText,
-  FiStar,
-  FiSettings,
-  FiHelpCircle,
-  FiBarChart,
-} from 'react-icons/fi';
-import { Button } from '../../common/Button';
-import { SidebarContainer, Logo, NavItem, Badge, NavSection, NavHeader } from './Sidebar.styles';
+  HomeIcon, ChartIcon, UsersIcon, ProjectIcon, 
+  SettingsIcon, DocumentIcon, CalendarIcon 
+} from '../../common/Icons';
 
-interface MenuItem {
-  path: string;
-  label: string;
-  icon: IconType;
-  section: string;
-  badge?: string;
-}
+const SidebarContainer = styled.aside`
+  width: 280px;
+  min-height: 100vh;
+  background: ${({ theme }) => theme.colors.sidebar};
+  border-right: 1px solid ${({ theme }) => theme.colors.border};
+  padding: 24px 0;
+`;
 
-const menuItems: MenuItem[] = [
-  { path: '/', label: '홈', icon: FiHome, section: 'main' },
-  { path: '/dashboard', label: '대시보드', icon: FiPieChart, badge: '5', section: 'main' },
-  { path: '/calendar', label: '캘린더', icon: FiCalendar, section: 'apps' },
-  { path: '/chat', label: '채팅', icon: FiMessageSquare, section: 'apps' },
-  { path: '/projects', label: '프로젝트', icon: FiGrid, section: 'apps' },
-  { path: '/teams', label: '팀', icon: FiUsers, section: 'apps' },
-  { path: '/analytics', label: '분석', icon: FiBarChart, section: 'pages' },
-  { path: '/documents', label: '문서', icon: FiFileText, section: 'pages' },
-  { path: '/settings', label: '설정', icon: FiSettings, section: 'tools' },
-  { path: '/help', label: '도움말', icon: FiHelpCircle, section: 'tools' },
-  { path: '/orders', label: '주문', icon: FiShoppingCart,section: 'tools'  },
-  { path: '/favorites', label: '즐겨찾기', icon: FiStar,section: 'tools'  }
+const Logo = styled.div`
+  padding: 0 24px 24px;
+  img {
+    height: 32px;
+  }
+`;
+
+const NavGroup = styled.div`
+  margin-bottom: 24px;
+`;
+
+const NavLabel = styled.div`
+  padding: 12px 24px;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  letter-spacing: 0.5px;
+`;
+
+const NavItem = styled(NavLink)`
+  display: flex;
+  align-items: center;
+  padding: 12px 24px;
+  color: ${({ theme }) => theme.colors.sidebarText};
+  text-decoration: none;
+  font-size: 14px;
+  
+  &:hover {
+    background: ${({ theme }) => theme.colors.backgroundHover};
+  }
+  
+  &.active {
+    color: ${({ theme }) => theme.colors.primary};
+    background: ${({ theme }) => `${theme.colors.primary}10`};
+  }
+  
+  svg {
+    margin-right: 12px;
+  }
+`;
+
+const navItems = [
+  { path: '/', label: '대시보드', icon: HomeIcon },
+  { path: '/analytics', label: '분석', icon: ChartIcon },
+  { path: '/projects', label: '프로젝트', icon: ProjectIcon },
+  { path: '/users', label: '사용자', icon: UsersIcon },
+  { path: '/calendar', label: '캘린더', icon: CalendarIcon },
+  { path: '/documents', label: '문서', icon: DocumentIcon },
+  { path: '/settings', label: '설정', icon: SettingsIcon },
 ];
 
 export const Sidebar = () => {
-  const renderMenuItem = (item: MenuItem) => {
-    const Icon = item.icon as React.ComponentType<IconBaseProps>;
-    return (
-      <NavItem to={item.path} key={item.path}>
-        <Icon size={18} style={{ marginRight: '12px' }} aria-hidden="true" />
-        {item.label}
-        {item.badge && <Badge>{item.badge}</Badge>}
-      </NavItem>
-    );
-  };
-
-  const handleClick = () => {
-    // Implementation of handleClick function
-  };
+  const location = useLocation();
 
   return (
     <SidebarContainer>
       <Logo>
-        DevMatch Pro
+        <img src="/assets/img/logo.svg" alt="Logo" />
       </Logo>
 
-      <NavSection>
-        <NavHeader>Navigation</NavHeader>
-        {renderMenuItem(menuItems[0])}
-      </NavSection>
-
-      <NavSection>
-        <NavHeader>Apps</NavHeader>
-        {menuItems.slice(1, 6).map(renderMenuItem)}
-      </NavSection>
-
-      <NavSection>
-        <NavHeader>Pages</NavHeader>
-        {menuItems.slice(6, 8).map(renderMenuItem)}
-      </NavSection>
-
-      <NavSection>
-        <NavHeader>Tools</NavHeader>
-        {menuItems.slice(8).map(renderMenuItem)}
-      </NavSection>
-
-      <Button variant="outline" onClick={handleClick}>
-        클릭하기
-      </Button>
+      <NavGroup>
+        <NavLabel>메뉴</NavLabel>
+        {navItems.map((item) => (
+          <NavItem 
+            key={item.path}
+            to={item.path}
+            className={location.pathname === item.path ? 'active' : ''}
+          >
+            <item.icon size={20} />
+            {item.label}
+          </NavItem>
+        ))}
+      </NavGroup>
     </SidebarContainer>
   );
 }; 

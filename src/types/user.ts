@@ -44,15 +44,17 @@ export enum WorkType {
 
 export interface User {
   id: string;
+  username: string;
   email: string;
-  name: string;
-  role: 'ADMIN' | 'DEVELOPER' | 'CLIENT';
+  role: string;
+  name?: string;
   bio?: string;
   githubUrl?: string;
   portfolioUrl?: string;
+  avatar?: string;
   profileImage?: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface Experience {
@@ -81,13 +83,15 @@ export interface DeveloperProfile extends User {
   linkedinUrl?: string;
   company?: string;
   position?: string;
+  profileImage?: string;
 }
 
 export interface ClientProfile extends User {
   role: 'CLIENT';
-  company: string;
+  company?: string;
   position: string;
   title?: string;
+  profileImage?: string;
 }
 
 export interface ProfileEditorData {
@@ -116,5 +120,10 @@ export const isClientProfile = (profile: DeveloperProfile | ClientProfile): prof
 
 // 인증용 User 타입 (password 포함)
 export interface AuthUser extends User {
-  password: string;
+  password?: string;
+}
+
+export interface AuthResponse {
+  user: User;
+  token: string;
 }

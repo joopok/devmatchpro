@@ -1,14 +1,15 @@
 import React, { Suspense } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import { ToastProvider } from './components/common/Toast';
 import { useSelector } from 'react-redux';
-import theme from './styles/theme';
+import baseTheme from './styles/theme';
 import { RootState } from './store/store';
 import GlobalStyle from './styles/GlobalStyle';
-import { routes } from './router/routes';
+import { router } from './router';
 import { ErrorBoundary } from './components/common/ErrorBoundary/ErrorBoundary';
 import './styles/fonts.css';
+import { Layout } from './components/layout/Layout';
 
 const LoadingFallback = () => (
   <div className="flex items-center justify-center min-h-screen">
@@ -19,33 +20,40 @@ const LoadingFallback = () => (
 const App: React.FC = () => {
   const isDarkMode = useSelector((state: RootState) => state.theme.isDarkMode);
 
-  // 다크모드 테마는 기본 테마를 기반으로 색상만 오버라이드
-  const currentTheme = isDarkMode
-    ? {
-        ...theme,
-        colors: {
-          ...theme.colors,
-          primary: '#0A84FF',
-          background: '#1A1A1A',
-          surface: '#2C2C2C',
-          text: '#FFFFFF',
-          textSecondary: '#A0A0A0',
-          border: '#404040',
-          error: '#FF453A',
-          success: '#32D74B',
-          warning: '#FFD60A',
-          info: '#64D2FF',
-          backgroundHover: '#363636',
-          sidebar: '#2C2C2C',
-        },
-      }
-    : theme;
-
-  const browserRouter = createBrowserRouter(routes, {
-    future: {
-      v7_normalizeFormMethod: true,
+  const currentTheme = {
+    ...baseTheme,
+    colors: {
+      ...baseTheme.colors,
+      primary: '#0066ff',
+      secondary: '#6c757d',
+      success: '#28a745',
+      danger: '#dc3545',
+      warning: '#ffc107',
+      info: '#17a2b8',
+      light: '#f8f9fa',
+      dark: '#343a40',
+      gray: {
+        50: '#f8f9fa',
+        100: '#e9ecef',
+        200: '#dee2e6',
+        300: '#ced4da',
+        400: '#adb5bd',
+        500: '#6c757d',
+        600: '#495057',
+        700: '#343a40',
+        800: '#212529',
+        900: '#1a1a1a',
+      },
+      text: '#212529',
+      textSecondary: '#6c757d',
+      background: '#ffffff',
+      border: '#dee2e6',
+      sidebar: '#343a40',
+      sidebarText: '#ffffff',
+      backgroundHover: '#e2e6ea',
     },
-  });
+    isDarkMode,
+  };
 
   return (
     <ErrorBoundary>
@@ -53,7 +61,7 @@ const App: React.FC = () => {
         <GlobalStyle theme={currentTheme} />
         <ToastProvider>
           <Suspense fallback={<LoadingFallback />}>
-            <RouterProvider router={browserRouter} />
+            <RouterProvider router={router} />
           </Suspense>
         </ToastProvider>
       </ThemeProvider>

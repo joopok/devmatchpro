@@ -11,7 +11,7 @@ export const usePermissions = () => {
   const { user } = useAuth();
   
   const { data: permissions = [], isLoading } = useQuery({
-    queryKey: ['permissions', user?.id],
+    queryKey: ['permissions', user?.username],
     queryFn: async () => {
       const response = await fetch('/api/permissions');
       return response.json();
