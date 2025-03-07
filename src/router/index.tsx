@@ -1,26 +1,39 @@
 import React, { Suspense } from 'react';
-import { createBrowserRouter, Outlet } from 'react-router-dom';
-import { Layout } from '../pages/layout/Layout';
+import { createBrowserRouter, Outlet, Navigate } from 'react-router-dom';
+import { Layout } from '../pages/layout';
 import { PrivateRoute } from './PrivateRoute';
-import { projectApi } from '../services/api/project';
+import { routes } from './routes';
 
-const Home = React.lazy(() => import('../pages/Home/Home'));
-const Projects = React.lazy(() => import('../pages/Projects'));
-const Analytics = React.lazy(() => import('../pages/Analytics'));
-const Users = React.lazy(() => import('../pages/Users'));
-const Calendar = React.lazy(() => import('../pages/Calendar'));
-const Documents = React.lazy(() => import('../pages/Documents'));
-const Settings = React.lazy(() => import('../pages/Settings'));
-const ProjectList = React.lazy(() => import('../pages/Projects/ProjectList'));
-const ProjectDetail = React.lazy(() => import('../pages/Projects/ProjectDetail'));
-const TeamList = React.lazy(() => import('../pages/Teams/TeamList'));
-const TeamDetail = React.lazy(() => import('../pages/Teams/TeamDetail'));
-const Login = React.lazy(() => import('../pages/auth/Login'));
-const Register = React.lazy(() => import('../pages/auth/Register'));
-const Profile = React.lazy(() => import('../pages/auth/Profile'));
+// 로딩 컴포넌트
+const PageLoading: React.FC = () => {
+  return <div>페이지 로딩중...</div>;
+};
 
-const PageLoading = () => <div>페이지 로딩중...</div>;
+/**
+ * Suspense로 컴포넌트를 감싸는 HOC
+ */
+const withSuspense = (Component: React.LazyExoticComponent<any>): React.ReactElement => {
+  return (
+    <Suspense fallback={<PageLoading />}>
+      <Component />
+    </Suspense>
+  );
+};
 
+/**
+ * 인증이 필요한 컴포넌트를 위한 HOC
+ */
+const withPrivate = (Component: React.LazyExoticComponent<any>): React.ReactElement => {
+  return (
+    <PrivateRoute>
+      {withSuspense(Component)}
+    </PrivateRoute>
+  );
+};
+
+/**
+ * 라우터 설정
+ */
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -29,135 +42,21 @@ export const router = createBrowserRouter([
         <Outlet />
       </Layout>
     ),
+    children: routes,
+  },
+  {
+    path: 'auth',
     children: [
-      {
-        path: '/',
-        element: (
-          <Suspense fallback={<PageLoading />}>
-            <Home />
-          </Suspense>
-        ),
-      },
-      {
-        path: 'projects',
-        element: (
-          <Suspense fallback={<PageLoading />}>
-            <Projects />
-          </Suspense>
-        ),
-      },
-      {
-        path: 'analytics',
-        element: (
-          <Suspense fallback={<PageLoading />}>
-            <Analytics />
-          </Suspense>
-        ),
-      },
-      {
-        path: 'users',
-        element: (
-          <Suspense fallback={<PageLoading />}>
-            <Users />
-          </Suspense>
-        ),
-      },
-      {
-        path: 'calendar',
-        element: (
-          <Suspense fallback={<PageLoading />}>
-            <Calendar />
-          </Suspense>
-        ),
-      },
-      {
-        path: 'documents',
-        element: (
-          <Suspense fallback={<PageLoading />}>
-            <Documents />
-          </Suspense>
-        ),
-      },
-      {
-        path: 'settings',
-        element: (
-          <Suspense fallback={<PageLoading />}>
-            <Settings />
-          </Suspense>
-        ),
-      },
-      {
-        path: 'projects',
-        element: (
-          <Suspense fallback={<PageLoading />}>
-            <ProjectList />
-          </Suspense>
-        ),
-        loader: async () => {
-          try {
-            return await projectApi.getProjects();
-          } catch (error) {
-            console.error('Failed to load projects:', error);
-            return [];
-          }
-        }
-      },
-      {
-        path: 'projects/:id',
-        element: (
-          <Suspense fallback={<PageLoading />}>
-            <PrivateRoute>
-              <ProjectDetail />
-            </PrivateRoute>
-          </Suspense>
-        ),
-      },
-      {
-        path: 'teams',
-        element: (
-          <Suspense fallback={<PageLoading />}>
-            <PrivateRoute>
-              <TeamList />
-            </PrivateRoute>
-          </Suspense>
-        ),
-      },
-      {
-        path: 'teams/:id',
-        element: (
-          <Suspense fallback={<PageLoading />}>
-            <PrivateRoute>
-              <TeamDetail />
-            </PrivateRoute>
-          </Suspense>
-        ),
-      },
-      {
-        path: 'profile',
-        element: (
-          <Suspense fallback={<PageLoading />}>
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          </Suspense>
-        ),
-      },
+      { path: 'login', element: withSuspense(React.lazy(() => import('../pages/auth/Login'))) },
+      { path: 'register', element: withSuspense(React.lazy(() => import('../pages/auth/Register'))) },
     ],
   },
   {
-    path: '/login',
-    element: (
-      <Suspense fallback={<PageLoading />}>
-        <Login />
-      </Suspense>
-    ),
+    path: 'login',
+    element: <Navigate to="/auth/login" replace />
   },
   {
-    path: '/register',
-    element: (
-      <Suspense fallback={<PageLoading />}>
-        <Register />
-      </Suspense>
-    ),
+    path: 'register',
+    element: <Navigate to="/auth/register" replace />
   },
-]); 
+]);

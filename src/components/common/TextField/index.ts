@@ -1,1 +1,3 @@
-export { TextField } from './TextField'; 
+import { Input } from '../Input';
+
+export const TextField = Input; 

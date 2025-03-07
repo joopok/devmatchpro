@@ -23,6 +23,8 @@ export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
     -moz-osx-font-smoothing: grayscale;
     height: 100%;
     transition: all 0.3s ease;
+    margin: 0;
+    padding: 0;
   }
 
   h1, h2, h3, h4, h5, h6, p, span {
@@ -30,24 +32,29 @@ export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
   }
 
   h1, h2, h3, h4, h5, h6 {
+    padding: 0;
     margin-bottom: 0.5rem;
     font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
     line-height: 1.2;
   }
 
   h1 {
+    padding: 0;
     font-size: ${({ theme }) => theme.typography.h1.fontSize};
   }
 
   h2 {
+    padding: 0;
     font-size: ${({ theme }) => theme.typography.h2.fontSize};
   }
 
   h3 {
+    padding: 0;
     font-size: ${({ theme }) => theme.typography.h3.fontSize};
   }
 
   p {
+    padding: 0;
     margin-bottom: 1rem;
   }
 
@@ -76,14 +83,17 @@ export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
     width: 100%;
     margin-bottom: 1rem;
     border-collapse: collapse;
+    border-spacing: 0;
   }
 
   th, td {
+    border-spacing: 0;
     padding: 0.75rem;
     border-bottom: 1px solid ${({ theme }) => theme.colors.border};
   }
 
   th {
+    border-spacing: 0;
     font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
     text-align: left;
   }
@@ -212,6 +222,8 @@ export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
 
   .w-100 { width: 100%; }
   .h-100 { height: 100%; }
+
+  
 `;
 
 export default GlobalStyle; 

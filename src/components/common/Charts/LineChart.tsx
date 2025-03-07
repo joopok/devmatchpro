@@ -1,4 +1,6 @@
 import React from 'react';
+import styled from 'styled-components';
+import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -8,10 +10,10 @@ import {
   Title,
   Tooltip,
   Legend,
-  Filler
+  ChartOptions,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
 
+// ChartJS 등록
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -19,20 +21,48 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend,
-  Filler
+  Legend
 );
 
-interface LineChartProps {
-  data: any;
+const ChartContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  padding: 16px;
+`;
+
+export interface LineChartProps {
+  data: {
+    labels: string[];
+    datasets: Array<{
+      label: string;
+      data: number[];
+      borderColor?: string;
+      backgroundColor?: string;
+      fill?: boolean;
+      tension?: number;
+    }>;
+  };
+  options?: ChartOptions<'line'>;
+  height?: number;
+  width?: number;
 }
 
-export const LineChart: React.FC<LineChartProps> = ({ data }) => {
-  const options = {
+export const LineChart: React.FC<LineChartProps> = ({
+  data,
+  options,
+  height,
+  width,
+}) => {
+  const defaultOptions: ChartOptions<'line'> = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
-        display: false
+        position: 'top' as const,
+      },
+      title: {
+        display: false,
       },
       tooltip: {
         mode: 'index' as const,
@@ -41,10 +71,24 @@ export const LineChart: React.FC<LineChartProps> = ({ data }) => {
     },
     scales: {
       y: {
-        beginAtZero: true
-      }
-    }
+        beginAtZero: true,
+      },
+    },
+    elements: {
+      line: {
+        tension: 0.4,
+      },
+    },
   };
 
-  return <Line options={options} data={data} />;
+  return (
+    <ChartContainer>
+      <Line
+        data={data}
+        options={options || defaultOptions}
+        height={height}
+        width={width}
+      />
+    </ChartContainer>
+  );
 }; 

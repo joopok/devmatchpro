@@ -35,12 +35,15 @@ export interface FileUploadResponse {
 export interface FileType {
   id: string;
   name: string;
-  type: string;
-  size: number;
-  url: string;
-  folderId?: string;
-  updatedAt: Date;
-  isDeleted: boolean;
+  path: string;
+  type: 'file' | 'folder';
+  size?: number;
+  createdAt: string;
+  updatedAt: string;
+  extension?: string;
+  folderId?: string | null;
+  url?: string;
+  thumbnail?: string;
 }
 
 export interface FolderType {
@@ -55,4 +58,18 @@ export interface FileManagerState {
   folders: FolderType[];
   selectedFolder: string | null;
   searchQuery: string;
+}
+
+export interface UploadProgress {
+  fileId: string;
+  progress: number;
+  status: 'pending' | 'uploading' | 'completed' | 'error';
+  error?: string;
+}
+
+export interface FileFilter {
+  type?: ('file' | 'folder')[];
+  extension?: string[];
+  folderId?: string | null;
+  searchQuery?: string;
 }

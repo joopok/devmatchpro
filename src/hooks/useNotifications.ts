@@ -7,7 +7,7 @@ export const useNotifications = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchNotifications = async () => {
+  const fetchNotifications = useCallback(async () => {
     try {
       setIsLoading(true);
       const { data } = await notificationApi.getNotifications();
@@ -17,7 +17,7 @@ export const useNotifications = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   const markAsRead = useCallback(async (notificationId: string) => {
     try {

@@ -1,42 +1,86 @@
 import React from 'react';
+import styled from 'styled-components';
+import { Bar } from 'react-chartjs-2';
 import {
-  BarChart as RechartsBarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
   Tooltip,
   Legend,
-  ResponsiveContainer as RechartsResponsiveContainer,
-} from 'recharts';
+  ChartOptions,
+} from 'chart.js';
 
-interface BarChartProps {
-  data: Array<Record<string, any>>;
-  xAxisKey: string;
-  yAxisKey: string;
+// ChartJS 등록
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const ChartContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  padding: 16px;
+`;
+
+export interface BarChartProps {
+  data: {
+    labels: string[];
+    datasets: Array<{
+      label: string;
+      data: number[];
+      backgroundColor?: string | string[];
+      borderColor?: string | string[];
+      borderWidth?: number;
+    }>;
+  };
+  options?: ChartOptions<'bar'>;
   height?: number;
-  color?: string;
-  format?: (value: number) => string;
+  width?: number;
 }
 
 export const BarChart: React.FC<BarChartProps> = ({
   data,
-  xAxisKey,
-  yAxisKey,
-  height = 300,
-  color = '#2196F3',
-  format = (value) => value.toString(),
+  options,
+  height,
+  width,
 }) => {
+  const defaultOptions: ChartOptions<'bar'> = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      title: {
+        display: false,
+      },
+      tooltip: {
+        mode: 'index' as const,
+        intersect: false,
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+
   return (
-    <RechartsResponsiveContainer width="100%" height={height}>
-      <RechartsBarChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey={xAxisKey} />
-        <YAxis />
-        <Tooltip formatter={(value) => format(value as number)} />
-        <Legend />
-        <Bar dataKey={yAxisKey} fill={color} />
-      </RechartsBarChart>
-    </RechartsResponsiveContainer>
+    <ChartContainer>
+      <Bar
+        data={data}
+        options={options || defaultOptions}
+        height={height}
+        width={width}
+      />
+    </ChartContainer>
   );
-};
+}; 

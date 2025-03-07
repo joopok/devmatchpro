@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Table } from '../Table/Table';
+import { Table } from '../../Table/Table';
 import { Pagination } from '../Pagination/Pagination';
-import { SearchBar } from '../Search/SearchBar';
+import { SearchBar } from '../search/SearchBar';
 import { FilterGroup } from '../Filter/FilterGroup';
 import {
   DataGridContainer,

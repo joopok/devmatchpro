@@ -2,6 +2,16 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Button } from '../../components/common/Button';
 
+export const AuthLayout = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: ${({ theme }) => theme.isDarkMode ? '#1e2231' : '#fff'};
+`;
+
 export const LoginContainer = styled.div`
   min-height: 100vh;
   display: grid;

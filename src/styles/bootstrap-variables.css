@@ -1,0 +1,140 @@
+:root,
+[data-bs-theme="light"] {
+  --bs-primary: #0066ff;
+  --bs-primary-rgb: 0, 102, 255;
+  --bs-primary-subtle: #ddedff;
+  --bs-primary-subtle-rgb: 221, 237, 255;
+  --bs-primary-emphasis: #0052cc;
+  --bs-primary-emphasis-rgb: 0, 82, 204;
+  
+  --bs-secondary: #6c757d;
+  --bs-secondary-rgb: 108, 117, 125;
+  --bs-secondary-subtle: #e9ecef;
+  --bs-secondary-subtle-rgb: 233, 236, 239;
+  --bs-secondary-emphasis: #5a6268;
+  --bs-secondary-emphasis-rgb: 90, 98, 104;
+  
+  --bs-success: #28a745;
+  --bs-success-rgb: 40, 167, 69;
+  --bs-success-subtle: #d4edda;
+  --bs-success-subtle-rgb: 212, 237, 218;
+  --bs-success-emphasis: #218838;
+  --bs-success-emphasis-rgb: 33, 136, 56;
+  
+  --bs-danger: #dc3545;
+  --bs-danger-rgb: 220, 53, 69;
+  --bs-danger-subtle: #f8d7da;
+  --bs-danger-subtle-rgb: 248, 215, 218;
+  --bs-danger-emphasis: #c82333;
+  --bs-danger-emphasis-rgb: 200, 35, 51;
+  
+  --bs-warning: #ffc107;
+  --bs-warning-rgb: 255, 193, 7;
+  --bs-warning-subtle: #fff3cd;
+  --bs-warning-subtle-rgb: 255, 243, 205;
+  --bs-warning-emphasis: #e0a800;
+  --bs-warning-emphasis-rgb: 224, 168, 0;
+  
+  --bs-info: #17a2b8;
+  --bs-info-rgb: 23, 162, 184;
+  --bs-info-subtle: #d1ecf1;
+  --bs-info-subtle-rgb: 209, 236, 241;
+  --bs-info-emphasis: #138496;
+  --bs-info-emphasis-rgb: 19, 132, 150;
+  
+  --bs-body-bg: #f8f9fa;
+  --bs-body-bg-rgb: 248, 249, 250;
+  --bs-body-color: #212529;
+  --bs-body-color-rgb: 33, 37, 41;
+  
+  --bs-secondary-bg: #e9ecef;
+  --bs-secondary-bg-rgb: 233, 236, 239;
+  --bs-secondary-color: #495057;
+  --bs-secondary-color-rgb: 73, 80, 87;
+  
+  --bs-tertiary-bg: #fff;
+  --bs-tertiary-bg-rgb: 255, 255, 255;
+  --bs-tertiary-color: #212529;
+  --bs-tertiary-color-rgb: 33, 37, 41;
+  
+  --bs-quaternary-bg: #f8f9fa;
+  --bs-quaternary-bg-rgb: 248, 249, 250;
+  --bs-quaternary-color: #6c757d;
+  --bs-quaternary-color-rgb: 108, 117, 125;
+  
+  --bs-emphasis-color: #000;
+  --bs-emphasis-color-rgb: 0, 0, 0;
+  
+  --bs-border-color: #dee2e6;
+  --bs-border-color-rgb: 222, 226, 230;
+}
+
+[data-bs-theme="dark"] {
+  --bs-primary: #0d6efd;
+  --bs-primary-rgb: 13, 110, 253;
+  --bs-primary-subtle: #031633;
+  --bs-primary-subtle-rgb: 3, 22, 51;
+  --bs-primary-emphasis: #4d93ff;
+  --bs-primary-emphasis-rgb: 77, 147, 255;
+  
+  --bs-secondary: #6c757d;
+  --bs-secondary-rgb: 108, 117, 125;
+  --bs-secondary-subtle: #1a1d20;
+  --bs-secondary-subtle-rgb: 26, 29, 32;
+  --bs-secondary-emphasis: #a7acb1;
+  --bs-secondary-emphasis-rgb: 167, 172, 177;
+  
+  --bs-success: #198754;
+  --bs-success-rgb: 25, 135, 84;
+  --bs-success-subtle: #051b11;
+  --bs-success-subtle-rgb: 5, 27, 17;
+  --bs-success-emphasis: #75b798;
+  --bs-success-emphasis-rgb: 117, 183, 152;
+  
+  --bs-danger: #dc3545;
+  --bs-danger-rgb: 220, 53, 69;
+  --bs-danger-subtle: #2c0b0e;
+  --bs-danger-subtle-rgb: 44, 11, 14;
+  --bs-danger-emphasis: #ea868f;
+  --bs-danger-emphasis-rgb: 234, 134, 143;
+  
+  --bs-warning: #ffc107;
+  --bs-warning-rgb: 255, 193, 7;
+  --bs-warning-subtle: #332701;
+  --bs-warning-subtle-rgb: 51, 39, 1;
+  --bs-warning-emphasis: #ffda6a;
+  --bs-warning-emphasis-rgb: 255, 218, 106;
+  
+  --bs-info: #0dcaf0;
+  --bs-info-rgb: 13, 202, 240;
+  --bs-info-subtle: #032830;
+  --bs-info-subtle-rgb: 3, 40, 48;
+  --bs-info-emphasis: #6edff6;
+  --bs-info-emphasis-rgb: 110, 223, 246;
+  
+  --bs-body-bg: #1f2633;
+  --bs-body-bg-rgb: 31, 38, 51;
+  --bs-body-color: #dee2e6;
+  --bs-body-color-rgb: 222, 226, 230;
+  
+  --bs-secondary-bg: #343a40;
+  --bs-secondary-bg-rgb: 52, 58, 64;
+  --bs-secondary-color: #e9ecef;
+  --bs-secondary-color-rgb: 233, 236, 239;
+  
+  --bs-tertiary-bg: #1f2633;
+  --bs-tertiary-bg-rgb: 31, 38, 51;
+  --bs-tertiary-color: #dee2e6;
+  --bs-tertiary-color-rgb: 222, 226, 230;
+  
+  --bs-quaternary-bg: #1a1d20;
+  --bs-quaternary-bg-rgb: 26, 29, 32;
+  --bs-quaternary-color: #adb5bd;
+  --bs-quaternary-color-rgb: 173, 181, 189;
+  
+  --bs-emphasis-color: #fff;
+  --bs-emphasis-color-rgb: 255, 255, 255;
+  
+  --bs-border-color: #495057;
+  --bs-border-color-rgb: 73, 80, 87;
+} 

@@ -1,7 +1,12 @@
 import { User, AuthUser, AuthResponse } from '../../types/user';
 import { store } from '../../store/store';
 import axios from 'axios';
-import { STORAGE_KEYS } from '../../store/auth/authSlice';
+
+// 로컬 스토리지 키 정의
+const STORAGE_KEYS = {
+  TOKEN: 'devmatch_token',
+  USER: 'devmatch_user'
+};
 
 interface SignupRequest {
   email: string;
@@ -16,8 +21,7 @@ const getAuthState = () => {
   return state.auth;
 };
 
-// 사용하지 않는 함수 제거 또는 실제로 사용한다면 주석 추가
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// 세션 유효성 검증
 const validateSession = (): boolean => {
   const { user, token } = getAuthState();
   return !!(user && token);

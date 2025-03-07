@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledInputGroup } from './InputGroup.styles';
+import { FormField } from '../FormField/FormField';
 
 interface InputGroupProps {
   children: React.ReactNode;
@@ -14,11 +14,11 @@ export const InputGroup: React.FC<InputGroupProps> = ({
   spacing = 16,
   className,
 }) => (
-  <StyledInputGroup
+  <FormField
     direction={direction}
     spacing={spacing}
     className={className}
   >
     {children}
-  </StyledInputGroup>
+  </FormField>
 ); 

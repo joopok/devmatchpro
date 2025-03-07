@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BellIcon } from '../../../components/common/Icons';
+import { Bell } from 'lucide-react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/store';
 
 const BellContainer = styled.button`
   position: relative;
@@ -8,33 +10,48 @@ const BellContainer = styled.button`
   border: none;
   background: none;
   cursor: pointer;
+  color: ${({ theme }) => theme.isDarkMode ? '#adb5bd' : '#6c757d'};
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   
   &:hover {
-    color: ${({ theme }) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.isDarkMode ? '#384056' : '#f8f9fa'};
+    color: ${({ theme }) => theme.isDarkMode ? '#f8f9fa' : '#212529'};
   }
 `;
 
 const Badge = styled.span`
   position: absolute;
-  top: 0;
-  right: 0;
+  top: -2px;
+  right: -2px;
   background: ${({ theme }) => theme.colors.danger};
   color: white;
-  font-size: 0.75rem;
-  padding: 0.125rem 0.375rem;
-  border-radius: 999px;
-  min-width: 18px;
+  font-size: 0.625rem;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 600;
+  box-shadow: ${({ theme }) => theme.isDarkMode ? '0 0 0 2px #293041' : '0 0 0 2px #fff'};
 `;
 
 interface NotificationBellProps {
   count: number;
+  onClick?: () => void;
 }
 
-export const NotificationBell: React.FC<NotificationBellProps> = ({ count }) => {
+export const NotificationBell: React.FC<NotificationBellProps> = ({ count, onClick }) => {
+  const isDarkMode = useSelector((state: RootState) => state.theme.isDarkMode);
+  
   return (
-    <BellContainer>
-      <BellIcon size={20} />
-      {count > 0 && <Badge>{count}</Badge>}
+    <BellContainer onClick={onClick} aria-label={`알림 ${count}개`}>
+      <Bell size={20} />
+      {count > 0 && <Badge>{count > 99 ? '99+' : count}</Badge>}
     </BellContainer>
   );
 }; 

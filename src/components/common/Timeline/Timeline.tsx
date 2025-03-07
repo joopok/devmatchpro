@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-interface TimelineItem {
+interface TimelineItemType {
   id: string;
   title: string;
   status: string;
@@ -11,20 +11,20 @@ interface TimelineItem {
 }
 
 interface TimelineProps {
-  items: TimelineItem[];
+  items: TimelineItemType[];
 }
 
 export const Timeline: React.FC<TimelineProps> = ({ items }) => {
   return (
     <Container>
       {items.map((item) => (
-        <TimelineItem key={item.id} onClick={item.onClick}>
+        <TimelineItemContainer key={item.id} onClick={item.onClick}>
           <TimelineDot $status={item.status} />
           <TimelineContent>
             <Title>{item.title}</Title>
             {item.startDate && <Date>{item.startDate}</Date>}
           </TimelineContent>
-        </TimelineItem>
+        </TimelineItemContainer>
       ))}
     </Container>
   );
@@ -36,7 +36,7 @@ const Container = styled.div`
   gap: 16px;
 `;
 
-const TimelineItem = styled.div`
+const TimelineItemContainer = styled.div`
   display: flex;
   gap: 12px;
   cursor: pointer;

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Theme } from '../../../styles/theme';
+// import { Theme } from '../../../styles/theme';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'danger' | 'text' | 'icon';
 export type ButtonSize = 'small' | 'medium' | 'large';
@@ -9,15 +9,23 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   variant?: ButtonVariant;
   size?: ButtonSize;
   fullWidth?: boolean;
+  loading?: boolean;
+  icon?: React.ReactNode;
+  iconPosition?: 'left' | 'right';
 }
 
 interface StyledButtonProps {
   $variant: ButtonVariant;
   $size: ButtonSize;
   $fullWidth: boolean;
+  $iconOnly?: boolean;
 }
 
 const StyledButton = styled.button<StyledButtonProps>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   padding: ${({ $size }) => 
     $size === 'small' ? '0.375rem 0.75rem' :
     $size === 'large' ? '0.75rem 1.5rem' :
@@ -34,6 +42,10 @@ const StyledButton = styled.button<StyledButtonProps>`
   cursor: pointer;
   transition: all 0.2s ease;
   width: ${({ $fullWidth }) => ($fullWidth ? '100%' : 'auto')};
+
+  ${({ $iconOnly }) => $iconOnly && `
+    padding: 0.5rem;
+  `}
 
   ${({ $variant, theme }) => {
     switch ($variant) {
@@ -63,10 +75,19 @@ const StyledButton = styled.button<StyledButtonProps>`
           &:hover { background-color: ${theme.colors.errorDark}; }
         `;
       case 'text':
+        return `
+          background-color: transparent;
+          color: ${theme.colors.text};
+          &:hover { background-color: ${theme.colors.backgroundHover}; }
+          padding-left: 0.5rem;
+          padding-right: 0.5rem;
+        `;
       case 'icon':
         return `
           background-color: transparent;
           color: ${theme.colors.text};
+          border-radius: 50%;
+          padding: 0.5rem;
           &:hover { background-color: ${theme.colors.backgroundHover}; }
         `;
       default:
@@ -81,23 +102,9 @@ const StyledButton = styled.button<StyledButtonProps>`
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+    pointer-events: none;
   }
 `;
-
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = 'primary', size = 'medium', fullWidth = false, className, ...props }, ref) => (
-    <StyledButton
-      ref={ref}
-      $variant={variant}
-      $size={size}
-      $fullWidth={fullWidth}
-      className={className}
-      {...props}
-    />
-  )
-);
-
-Button.displayName = 'Button';
 
 const IconWrapper = styled.span`
   display: flex;
@@ -119,5 +126,46 @@ const LoadingSpinner = styled.div`
     }
   }
 `;
+
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ 
+    variant = 'primary', 
+    size = 'medium', 
+    fullWidth = false, 
+    className, 
+    children, 
+    loading, 
+    icon, 
+    iconPosition = 'left',
+    ...props 
+  }, ref) => {
+    const iconOnly = !children && !!icon;
+    
+    return (
+      <StyledButton
+        ref={ref}
+        $variant={variant}
+        $size={size}
+        $fullWidth={fullWidth}
+        $iconOnly={iconOnly}
+        className={className}
+        disabled={loading || props.disabled}
+        {...props}
+      >
+        {loading ? (
+          <LoadingSpinner />
+        ) : (
+          <>
+            {icon && iconPosition === 'left' && <IconWrapper>{icon}</IconWrapper>}
+            {children}
+            {icon && iconPosition === 'right' && <IconWrapper>{icon}</IconWrapper>}
+          </>
+        )}
+      </StyledButton>
+    );
+  }
+);
+
+Button.displayName = 'Button';
 
 export default Button; 

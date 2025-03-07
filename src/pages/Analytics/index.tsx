@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { RevenueAnalytics } from '../../components/Project/analytics/RevenueAnalytics/RevenueAnalytics';
+import { RevenueAnalytics } from '../../components/common/analytics/RevenueAnalytics/RevenueAnalytics';
 
 const AnalyticsContainer = styled.div`
   padding: ${({ theme }) => theme.spacing.lg};

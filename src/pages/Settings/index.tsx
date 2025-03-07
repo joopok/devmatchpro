@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeConfigurator } from '../../components/Project/settings/ThemeConfigurator/ThemeConfigurator';
+import { ThemeConfigurator } from '../../components/project/settings/ThemeConfigurator';   
 import type { ThemeConfig } from '../../types/theme';
 
 const defaultTheme: ThemeConfig = {

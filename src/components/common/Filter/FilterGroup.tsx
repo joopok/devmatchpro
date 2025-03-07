@@ -1,22 +1,44 @@
-import React from 'react';
-import {
-  FilterContainer,
-  FilterTitle,
-  FilterList,
-  FilterItem,
-  FilterCheckbox,
-  FilterLabel,
-} from './FilterGroup.styles';
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
-interface FilterOption {
-  id: string;
-  label: string;
-  count?: number;
-}
+const FilterGroupContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-right: 16px;
+`;
+
+const FilterTitle = styled.div`
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: ${({ theme }) => theme.colors.textSecondary};
+`;
+
+const FilterOptions = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+`;
+
+const FilterOption = styled.div<{ $selected: boolean }>`
+  padding: 6px 12px;
+  border-radius: ${({ theme }) => theme.borderRadius}px;
+  font-size: 13px;
+  cursor: pointer;
+  background-color: ${({ theme, $selected }) =>
+    $selected ? theme.colors.primary : theme.colors.backgroundAlt};
+  color: ${({ theme, $selected }) => 
+    $selected ? theme.colors.white : theme.colors.textPrimary};
+  
+  &:hover {
+    background-color: ${({ theme, $selected }) =>
+      $selected ? theme.colors.primaryDark : theme.colors.backgroundHover};
+  }
+`;
 
 interface FilterGroupProps {
   title: string;
-  options: FilterOption[];
+  options: Array<{ id: string; label: string }>;
   selected: string[];
   onChange: (selected: string[]) => void;
 }
@@ -27,32 +49,28 @@ export const FilterGroup: React.FC<FilterGroupProps> = ({
   selected,
   onChange,
 }) => {
-  const handleToggle = (id: string) => {
-    const newSelected = selected.includes(id)
-      ? selected.filter(item => item !== id)
-      : [...selected, id];
-    onChange(newSelected);
+  const handleToggleOption = (optionId: string) => {
+    if (selected.includes(optionId)) {
+      onChange(selected.filter(id => id !== optionId));
+    } else {
+      onChange([...selected, optionId]);
+    }
   };
 
   return (
-    <FilterContainer>
+    <FilterGroupContainer>
       <FilterTitle>{title}</FilterTitle>
-      <FilterList>
+      <FilterOptions>
         {options.map(option => (
-          <FilterItem key={option.id}>
-            <FilterCheckbox
-              type="checkbox"
-              id={option.id}
-              checked={selected.includes(option.id)}
-              onChange={() => handleToggle(option.id)}
-            />
-            <FilterLabel htmlFor={option.id}>
-              {option.label}
-              {option.count !== undefined && ` (${option.count})`}
-            </FilterLabel>
-          </FilterItem>
+          <FilterOption
+            key={option.id}
+            $selected={selected.includes(option.id)}
+            onClick={() => handleToggleOption(option.id)}
+          >
+            {option.label}
+          </FilterOption>
         ))}
-      </FilterList>
-    </FilterContainer>
+      </FilterOptions>
+    </FilterGroupContainer>
   );
 }; 

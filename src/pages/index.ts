@@ -14,3 +14,4 @@ export { default as ProjectList } from './Projects/ProjectList';
 export { default as ProjectDetail } from './Projects/ProjectDetail';
 export { default as TeamList } from './Teams/TeamList';
 export { default as TeamDetail } from './Teams/TeamDetail'; 
+export { default as Ecommerce } from './Ecommerce';   

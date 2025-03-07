@@ -1,167 +1,134 @@
-import React, { useMemo } from 'react';
-import styled, { css } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
-  siblingCount?: number;
-  showFirstLast?: boolean;
-  disabled?: boolean;
-  className?: string;
 }
+
+const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  gap: 8px;
+`;
+
+const PageButton = styled.button<{ $active?: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: ${({ theme }) => theme.borderRadius}px;
+  font-size: 14px;
+  font-weight: ${({ $active }) => ($active ? '600' : '400')};
+  cursor: pointer;
+  background-color: ${({ theme, $active }) =>
+    $active ? theme.colors.primary : theme.colors.backgroundAlt};
+  color: ${({ theme, $active }) =>
+    $active ? theme.colors.white : theme.colors.textPrimary};
+  border: none;
+
+  &:hover {
+    background-color: ${({ theme, $active }) =>
+      $active ? theme.colors.primaryDark : theme.colors.backgroundHover};
+  }
+  
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    background-color: ${({ theme }) => theme.colors.backgroundAlt};
+    color: ${({ theme }) => theme.colors.textSecondary};
+  }
+`;
+
+const PageEllipsis = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.textSecondary};
+`;
 
 export const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   totalPages,
   onPageChange,
-  siblingCount = 1,
-  showFirstLast = true,
-  disabled = false,
-  className,
 }) => {
-  const paginationRange = useMemo(() => {
-    const range = (start: number, end: number) =>
-      Array.from({ length: end - start + 1 }, (_, i) => start + i);
-
-    const totalPageNumbers = siblingCount * 2 + 3;
+  // 페이지 버튼 숫자 생성 로직
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+    const delta = 2; // 현재 페이지 주변에 표시할 페이지 수
     
-    if (totalPageNumbers >= totalPages) {
-      return range(1, totalPages);
-    }
-
-    const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
-    const rightSiblingIndex = Math.min(
-      currentPage + siblingCount,
-      totalPages
-    );
-
-    const shouldShowLeftDots = leftSiblingIndex > 2;
-    const shouldShowRightDots = rightSiblingIndex < totalPages - 1;
-
-    if (!shouldShowLeftDots && shouldShowRightDots) {
-      const leftItemCount = 3 + 2 * siblingCount;
-      return [...range(1, leftItemCount), -1, totalPages];
-    }
-
-    if (shouldShowLeftDots && !shouldShowRightDots) {
-      const rightItemCount = 3 + 2 * siblingCount;
-      return [1, -1, ...range(totalPages - rightItemCount + 1, totalPages)];
-    }
-
-    return [
-      1,
-      -1,
-      ...range(leftSiblingIndex, rightSiblingIndex),
-      -2,
-      totalPages,
-    ];
-  }, [currentPage, totalPages, siblingCount]);
-
-  if (totalPages <= 1) return null;
-
-  return (
-    <PaginationContainer className={className}>
-      {showFirstLast && (
-        <PaginationButton
-          onClick={() => onPageChange(1)}
-          disabled={disabled || currentPage === 1}
-        >
-          처음
-        </PaginationButton>
-      )}
+    if (totalPages <= 7) {
+      // 전체 페이지가 7개 이하면 모든 페이지 버튼을 표시
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else {
+      // 항상 첫 페이지 버튼 표시
+      pageNumbers.push(1);
       
-      <PaginationButton
+      // 현재 페이지가 4보다 크면 '...' 표시
+      if (currentPage > 4) {
+        pageNumbers.push('ellipsis1');
+      }
+      
+      // 현재 페이지 주변의 페이지 버튼 표시
+      const rangeStart = Math.max(2, currentPage - delta);
+      const rangeEnd = Math.min(totalPages - 1, currentPage + delta);
+      
+      for (let i = rangeStart; i <= rangeEnd; i++) {
+        pageNumbers.push(i);
+      }
+      
+      // 현재 페이지가 전체 페이지 - 3보다 작으면 '...' 표시
+      if (currentPage < totalPages - 3) {
+        pageNumbers.push('ellipsis2');
+      }
+      
+      // 항상 마지막 페이지 버튼 표시
+      if (totalPages > 1) {
+        pageNumbers.push(totalPages);
+      }
+    }
+    
+    return pageNumbers;
+  };
+  
+  return (
+    <PaginationContainer>
+      <PageButton
+        disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
-        disabled={disabled || currentPage === 1}
       >
-        이전
-      </PaginationButton>
-
-      {paginationRange.map((pageNumber, index) => {
-        if (pageNumber === -1 || pageNumber === -2) {
-          return <Dots key={`dots-${index}`}>...</Dots>;
-        }
-
-        return (
-          <PaginationButton
-            key={pageNumber}
-            onClick={() => onPageChange(pageNumber)}
-            disabled={disabled}
-            active={pageNumber === currentPage}
+        &#8592;
+      </PageButton>
+      
+      {getPageNumbers().map((page, index) => (
+        page === 'ellipsis1' || page === 'ellipsis2' ? (
+          <PageEllipsis key={`ellipsis-${index}`}>
+            …
+          </PageEllipsis>
+        ) : (
+          <PageButton
+            key={`page-${page}`}
+            $active={page === currentPage}
+            onClick={() => onPageChange(Number(page))}
           >
-            {pageNumber}
-          </PaginationButton>
-        );
-      })}
-
-      <PaginationButton
+            {page}
+          </PageButton>
+        )
+      ))}
+      
+      <PageButton
+        disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
-        disabled={disabled || currentPage === totalPages}
       >
-        다음
-      </PaginationButton>
-
-      {showFirstLast && (
-        <PaginationButton
-          onClick={() => onPageChange(totalPages)}
-          disabled={disabled || currentPage === totalPages}
-        >
-          마지막
-        </PaginationButton>
-      )}
+        &#8594;
+      </PageButton>
     </PaginationContainer>
   );
-};
-
-const PaginationContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-`;
-
-const PaginationButton = styled.button<{ active?: boolean }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 32px;
-  height: 32px;
-  padding: 0 8px;
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: ${({ theme }) => theme.borderRadius}px;
-  background-color: ${({ theme }) => theme.colors.surface};
-  color: ${({ theme }) => theme.colors.text};
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover:not(:disabled) {
-    background-color: ${({ theme }) => theme.colors.backgroundHover};
-    border-color: ${({ theme }) => theme.colors.primary};
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  ${({ active, theme }) =>
-    active &&
-    css`
-      background-color: ${theme.colors.primary};
-      border-color: ${theme.colors.primary};
-      color: ${theme.colors.white};
-
-      &:hover {
-        background-color: ${theme.colors.primary};
-      }
-    `}
-`;
-
-const Dots = styled.span`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 32px;
-  color: ${({ theme }) => theme.colors.textSecondary};
-`; 
+}; 

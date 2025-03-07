@@ -2,13 +2,19 @@ import axios from 'axios';
 import { store } from '../../store/store';
 import { logout } from '../../store/auth/authSlice';
 
+// 로컬 스토리지 키 정의
+const STORAGE_KEYS = {
+  TOKEN: 'devmatch_token',
+  USER: 'devmatch_user'
+};
+
 // 공통 axios 인스턴스 생성
 export const api = axios.create({
   baseURL: 'http://localhost:8081/api', // 기본 URL 설정
   timeout: 10000, // 요청 타임아웃 (10초)
   headers: {
     'Content-Type': 'application/json', // 기본 헤더 설정
-    'Authorization': `Bearer ${localStorage.getItem('access_token') || ''}` // 로컬 스토리지에서 토큰 가져오기
+    'Authorization': `Bearer ${localStorage.getItem(STORAGE_KEYS.TOKEN) || ''}` // 로컬 스토리지에서 토큰 가져오기
   },
 });
 
@@ -42,14 +48,14 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       // 토큰이 만료되었거나 유효하지 않은 경우
       store.dispatch(logout());
-      window.location.href = '/login';
+      window.location.href = '/auth/login';
     }
     return Promise.reject(error);
   }
 );
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

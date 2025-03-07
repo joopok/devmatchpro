@@ -23,7 +23,8 @@ import {
   SocialButtons,
   SocialButton,
   OrDivider,
-  TestimonialContent
+  TestimonialContent,
+  AuthLayout
 } from './Login.styles';
 
 interface LoginFormData {
@@ -78,8 +79,8 @@ const Login = () => {
       if (response.data && response.data.access_token) {
         const { access_token, username, email, ...userInfo } = response.data;
         
-        // Redux store에 사용자 정보 저장
-        dispatch(setUser({
+        // 사용자 데이터 구성
+        const userData = {
           id: userInfo.id,
           username,
           email,
@@ -90,10 +91,17 @@ const Login = () => {
           portfolioUrl: userInfo.portfolioUrl,
           createdAt: userInfo.createdAt,
           updatedAt: userInfo.updatedAt,
-        }));
+        };
+        
+        // Redux store에 사용자 정보 저장
+        dispatch(setUser(userData));
         
         // Redux store에 토큰 저장
         dispatch(setToken(access_token));
+        
+        // localStorage에 사용자 정보와 토큰 저장
+        localStorage.setItem('devmatch_token', access_token);
+        localStorage.setItem('devmatch_user', JSON.stringify(userData));
         
         // 홈으로 리다이렉트
         navigate('/', { replace: true });
@@ -114,98 +122,102 @@ const Login = () => {
   }
 
   return (
-    <LoginContainer>
-      <LoginBackground>
-        <TestimonialContent>
-          <h2>"</h2>
-          <p>이 템플릿은 우리가 원하던 그대로였습니다. 현대적이고 완벽하게 작동하며, 시각적으로도 아름답습니다. 더할 나위 없이 만족합니다.</p>
-          <div className="author">— 개발자, 도승현</div>
-        </TestimonialContent>
-      </LoginBackground>
-      
-      <LoginContent>
-        <LoginLogo src="/assets/img/logo.svg" alt="Logo" />
-        <LoginDescription>
-          <h1>Welcome back!</h1>
-          <p>Sign in to your account to continue</p>
-        </LoginDescription>
+    <AuthLayout>
+      <LoginContainer>
+        <LoginBackground>
+          <TestimonialContent>
+            <h2>"</h2>
+            <p>이 템플릿은 우리가 원하던 그대로였습니다. 현대적이고 완벽하게 작동하며, 시각적으로도 아름답습니다. 더할 나위 없이 만족합니다.</p>
+            <div className="author">— 개발자, 도승현</div>
+          </TestimonialContent>
+        </LoginBackground>
+        
+        <LoginContent>
+          <LoginLogo src="/assets/img/logo.svg" alt="Logo" />
+          <LoginDescription>
+            <h1>Welcome back!</h1>
+            <p>Sign in to your account to continue</p>
+          </LoginDescription>
 
-        <LoginCard>
-          <LoginFormWrapper>
-            <SocialButtons>
-              <SocialButton $provider="facebook">
-                Continue with Facebook
-              </SocialButton>
-              <SocialButton $provider="google">
-                Continue with Google
-              </SocialButton>
-              <SocialButton $provider="apple">
-                Continue with Apple
-              </SocialButton>
-            </SocialButtons>
+          <LoginCard>
+            <LoginFormWrapper>
+              <SocialButtons>
+                <SocialButton $provider="facebook">
+                  Continue with Facebook
+                </SocialButton>
+                <SocialButton $provider="google">
+                  Continue with Google
+                </SocialButton>
+                <SocialButton $provider="apple">
+                  Continue with Apple
+                </SocialButton>
+              </SocialButtons>
 
-            <OrDivider>
-              <span>OR</span>
-            </OrDivider>
+              <OrDivider>
+                <span>OR</span>
+              </OrDivider>
 
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <TextField
-                label="아이디"
-                placeholder="아이디를 입력하세요."
-                {...register('username', {
-                  required: '아이디를 입력해주세요',
-                  pattern: {
-                    value: /^[a-z0-9]{4,20}$/,
-                    message: '아이디는 4-20자의 영문 소문자, 숫자만 사용 가능합니다'
-                  }
-                })}
-                error={errors.username?.message}
-              />
-              
-              <TextField
-                label="비밀번호" 
-                type="password"
-                placeholder="비밀번호를 입력하세요."
-                {...register('password', {
-                  required: '비밀번호를 입력해주세요',
-                  pattern: {
-                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,}$/,
-                    //value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{4,}$/,
-                    message: '비밀번호는 4자 이상이며 영문, 숫자, 특수문자를 포함해야 합니다'
-                  }
-                })}
-                error={errors.password?.message}
-              />
+              <Form onSubmit={handleSubmit(onSubmit)}>
+                <TextField
+                  label="아이디"
+                  placeholder="아이디를 입력하세요."
+                  {...register('username', {
+                    required: '아이디를 입력해주세요',
+                    pattern: {
+                      value: /^[a-z0-9]{4,20}$/,
+                      message: '아이디는 4-20자의 영문 소문자, 숫자만 사용 가능합니다'
+                    }
+                  })}
+                  error={!!errors.username?.message}
+                  style={{ color: '#000' }}
+                />
+                
+                <TextField
+                  label="비밀번호" 
+                  type="password"
+                  placeholder="비밀번호를 입력하세요."
+                  {...register('password', {
+                    required: '비밀번호를 입력해주세요',
+                    pattern: {
+                      value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,}$/,
+                      //value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{4,}$/,
+                      message: '비밀번호는 4자 이상이며 영문, 숫자, 특수문자를 포함해야 합니다'
+                    }
+                  })}
+                  error={!!errors.password?.message}
+                  style={{ color: '#000' }}
+                />
 
-              <RememberMeWrapper>
-                <label>
-                  <input
-                    type="checkbox"
-                    {...register('rememberMe')}
-                  />
-                  <span>Remember me</span>
-                </label>
-                <StyledLink to="/forgot-password">Forgot password?</StyledLink>
-              </RememberMeWrapper>
+                <RememberMeWrapper>
+                  <label>
+                    <input
+                      type="checkbox"
+                      {...register('rememberMe')}
+                    />
+                    <span style={{ color: '#000' }}>Remember me</span>
+                  </label>
+                  <StyledLink to="/forgot-password">Forgot password?</StyledLink>
+                </RememberMeWrapper>
 
-              <LoginButton 
-                type="submit"
-                disabled={isSubmitting}
-                $fullWidth
-              >
-                {isSubmitting ? 'Signing in...' : 'Sign in'}
-              </LoginButton>
-            </Form>
+                <LoginButton 
+                  type="submit"
+                  disabled={isSubmitting}
+                  $fullWidth
+                >
+                  {isSubmitting ? 'Signing in...' : 'Sign in'}
+                </LoginButton>
+              </Form>
 
-            <LoginFooter>
-              <p>
-                Don't have an account? <StyledLink to="/register">Sign up</StyledLink>
-              </p>
-            </LoginFooter>
-          </LoginFormWrapper>
-        </LoginCard>
-      </LoginContent>
-    </LoginContainer>
+              <LoginFooter>
+                <p>
+                  Don't have an account? <StyledLink to="/register">Sign up</StyledLink>
+                </p>
+              </LoginFooter>
+            </LoginFormWrapper>
+          </LoginCard>
+        </LoginContent>
+      </LoginContainer>
+    </AuthLayout>
   );
 };
 
