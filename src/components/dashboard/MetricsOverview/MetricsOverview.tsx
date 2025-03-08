@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from '../../Card';
-import { LineChart } from '../../charts/LineChart';
+import { LineChart } from '../../Charts/LineChart';
 import { ProgressBar } from '../../Progress';
 import { 
   BarChart2, 

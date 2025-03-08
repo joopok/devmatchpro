@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useProjectStats } from '../../../hooks/useProjectStats';
-import { BarChart, LineChart, PieChart } from '../../charts';
+import { BarChart, LineChart, PieChart } from '../../Charts';
 import { Card, CardHeader, CardContent } from '@mui/material';
 import { Project } from '../../../types/project';
 

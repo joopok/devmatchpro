@@ -8,7 +8,7 @@ const FooterContainer = styled.footer`
   padding: 1rem 1.5rem;
   background: ${({ theme }) => theme.isDarkMode ? '#1f2633' : 'var(--bs-tertiary-bg, #fff)'};
   color: var(--bs-secondary-color, #6c757d);
-  border-top: 1px solid var(--bs-border-color, #dee2e6);
+  border-top: 0;
   font-size: calc(1rem + 0.5px);
 `;
 

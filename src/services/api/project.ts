@@ -33,8 +33,5 @@ export const projectApi = {
   update: (id: string, data: UpdateProjectDto) =>  api.patch<Project>(`/projects/${id}`, data),
   delete: (id: string) => api.delete(`/projects/${id}`),
   getByTeam: (teamId: string) => api.get<Project[]>(`/teams/${teamId}/projects`),
-  getProjects: async () => {
-    // API 구현
-    return [];
-  }
+  getProjects: async () => {return [];}
 }; 

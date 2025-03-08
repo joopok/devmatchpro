@@ -12,13 +12,14 @@ interface AuthResponse {
 interface SignupRequest {
   email: string;
   password: string;
+  username1: string;
   username: string;
   role: 'DEVELOPER' | 'CLIENT';
 }
 
 export const login = createAsyncThunk<
   User,
-  { username: string; password: string }
+  { username1: string; password: string }
 >('auth/login', async (credentials, { dispatch }) => {
   try {
     dispatch(setLoading(true));

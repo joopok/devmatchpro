@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatsCard } from '../../Stats/StatsCard';
-import { LineChart } from '../../charts/LineChart';
+import { LineChart } from '../../Charts/LineChart';
 import {
   StatsContainer,
   StatsGrid,

@@ -233,3 +233,13 @@ export const OrDivider = styled.div`
     font-size: 0.9rem;
   }
 `;
+
+export const ErrorMessage = styled.div`
+  color: ${({ theme }) => theme.colors?.error || '#dc3545'};
+  background-color: ${({ theme }) => theme.isDarkMode ? 'rgba(220, 53, 69, 0.1)' : 'rgba(220, 53, 69, 0.05)'};
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  border-left: 3px solid ${({ theme }) => theme.colors?.error || '#dc3545'};
+  font-size: 14px;
+`;

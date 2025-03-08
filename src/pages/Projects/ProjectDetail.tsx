@@ -2,8 +2,8 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Card } from '../../components/Card';
-import { ProjectTimeline } from '../../components/project/ProjectTimeline';
-import { ProjectIssues } from '../../components/project/ProjectIssues';
+import { ProjectTimeline } from '../../components/Project/ProjectTimeline';
+import { ProjectIssues } from '../../components/Project/ProjectIssues';
 
 interface Project {
   id: string;

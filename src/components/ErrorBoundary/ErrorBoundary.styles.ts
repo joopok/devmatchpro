@@ -14,6 +14,7 @@ export const ErrorMessage = styled.p`
   color: ${({ theme }) => theme.colors.error};
   font-size: 16px;
   line-height: 1.5;
+ margin-bottom: 1rem; 
 `;
 
 export const RetryButton = styled.button`
@@ -28,4 +29,10 @@ export const RetryButton = styled.button`
   &:hover {
     background-color: ${({ theme }) => theme.colors.primaryDark};
   }
-`; 
+`;
+
+export const StyledErrorContainer = styled.div`
+  padding: 2rem;
+  text-align: center;
+  color: ${({ theme }) => theme.colors.error};
+`;

@@ -6,6 +6,7 @@ export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-decoration: none !important;
   }
 
   html {
@@ -60,17 +61,22 @@ export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
 
   a {
     color: ${({ theme }) => theme.colors.primary};
-    text-decoration: none;
+    text-decoration: none !important;
     
     &:hover {
-      text-decoration: none;
+      text-decoration: none !important;
       color: ${({ theme }) => theme.colors.primaryDark};
     }
+  }
+
+  a:hover, a:focus, a:active, a:visited {
+    text-decoration: none !important;
   }
 
   button {
     cursor: pointer;
     font-family: inherit;
+    text-decoration: none !important;
   }
 
   input, textarea, select {

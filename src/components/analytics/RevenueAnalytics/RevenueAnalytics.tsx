@@ -1,7 +1,8 @@
 import React from 'react';
-import { LineChart } from '../../charts/LineChart';
-import { BarChart } from '../../charts/BarChart';
+import { LineChart } from '../../Charts/LineChart';
+import { BarChart } from '../../Charts/BarChart';
 import { Card } from '../../Card';
+import { formatCurrency, formatPercentage } from '../../../utils/formatters';
 import {
   AnalyticsContainer,
   Header,
@@ -40,19 +41,6 @@ export const RevenueAnalytics: React.FC<RevenueAnalyticsProps> = ({
   period,
   onPeriodChange,
 }) => {
-  const formatCurrency = (amount: number): string => {
-    return new Intl.NumberFormat('ko-KR', {
-      style: 'currency',
-      currency: 'KRW',
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
-  const formatPercentage = (value: number): string => {
-    const sign = value >= 0 ? '+' : '';
-    return `${sign}${(value * 100).toFixed(1)}%`;
-  };
-
   // 라인 차트 데이터 구조
   const revenueChartData = {
     labels: metrics.monthlyData.map(item => item.month),

@@ -31,7 +31,7 @@ const ToggleButton = styled.button`
   }
 `;
 
-const IconWrapper = styled.div<{ isDarkMode: boolean }>`
+const IconWrapper = styled.div<{ $isDarkMode: boolean }>`
   position: relative;
   width: 24px;
   height: 24px;
@@ -48,14 +48,14 @@ const IconWrapper = styled.div<{ isDarkMode: boolean }>`
   }
 
   .sun-icon {
-    opacity: ${({ isDarkMode }) => isDarkMode ? 1 : 0};
-    transform: ${({ isDarkMode }) => isDarkMode ? 'translateY(0) rotate(0)' : 'translateY(10px) rotate(-30deg)'};
+    opacity: ${({ $isDarkMode }) => $isDarkMode ? 1 : 0};
+    transform: ${({ $isDarkMode }) => $isDarkMode ? 'translateY(0) rotate(0)' : 'translateY(10px) rotate(-30deg)'};
     color: #f8f9fa;
   }
 
   .moon-icon {
-    opacity: ${({ isDarkMode }) => isDarkMode ? 0 : 1};
-    transform: ${({ isDarkMode }) => isDarkMode ? 'translateY(-10px) rotate(30deg)' : 'translateY(0) rotate(0)'};
+    opacity: ${({ $isDarkMode }) => $isDarkMode ? 0 : 1};
+    transform: ${({ $isDarkMode }) => $isDarkMode ? 'translateY(-10px) rotate(30deg)' : 'translateY(0) rotate(0)'};
     color: #212529;
   }
 `;
@@ -74,7 +74,7 @@ export const ThemeToggle: React.FC = () => {
       title={isDarkMode ? '라이트 모드로 전환' : '다크 모드로 전환'}
       aria-label={isDarkMode ? '라이트 모드로 전환' : '다크 모드로 전환'}
     >
-      <IconWrapper isDarkMode={isDarkMode}>
+      <IconWrapper $isDarkMode={isDarkMode}>
         <Sun className="sun-icon" size={20} />
         <Moon className="moon-icon" size={20} />
       </IconWrapper>

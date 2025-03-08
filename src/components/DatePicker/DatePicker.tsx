@@ -3,7 +3,7 @@ import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import styled from 'styled-components';
 import { Control, Controller } from 'react-hook-form';
-import ko from 'date-fns/locale/ko';
+import { ko } from 'date-fns/locale';
 
 // 한국어 로케일 등록
 // TypeScript 오류를 해결하기 위해 타입 단언(type assertion) 사용

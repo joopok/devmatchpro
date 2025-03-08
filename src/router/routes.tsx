@@ -4,10 +4,10 @@ import { PrivateRoute } from './PrivateRoute';
 
 // 페이지 컴포넌트 로드
 const Home = lazy(() => import('../pages/Home'));
-const Login = lazy(() => import('../pages/auth/Login'));
-const Register = lazy(() => import('../pages/auth/Register'));
+const Login = lazy(() => import('../pages/Auth/Login'));
+const Register = lazy(() => import('../pages/Auth/Register'));
 const Dashboard = lazy(() => import('../pages/Dashboard'));
-const Profile = lazy(() => import('../pages/auth/Profile'));
+const Profile = lazy(() => import('../pages/Auth/Profile'));
 const Projects = lazy(() => import('../pages/Projects'));
 const ProjectList = lazy(() => import('../pages/Projects/ProjectList'));
 const ProjectDetail = lazy(() => import('../pages/Projects/ProjectDetail'));

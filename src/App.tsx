@@ -16,7 +16,7 @@ import './styles/custom.css';
 
 import { ThemeProvider } from './contexts/ThemeContext';
 import { BootstrapProvider } from './contexts/BootstrapContext';
-import SettingsPanel from './components/settings/SettingsPanel';
+import SettingsPanel from './components/Settings/SettingsPanel';
 import { initCSSVariables } from './utils/cssVariables';
 import { initBootstrap } from './utils/bootstrap';
 
@@ -45,7 +45,7 @@ const App: React.FC = () => {
             <ToastProvider>
               <Suspense fallback={<LoadingFallback />}>
                 <RouterProvider router={router} />
-                <SettingsPanel />
+                {localStorage.getItem('accessToken') && <SettingsPanel />}
               </Suspense>
             </ToastProvider>
           </StyledThemeProvider>

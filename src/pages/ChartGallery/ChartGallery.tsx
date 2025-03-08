@@ -11,7 +11,7 @@ import {
   AreaChart,
   HorizontalBarChart,
   MixedChart
-} from '../../components/charts';
+} from '../../components/Charts';
 
 const PageContainer = styled.div`
   padding: 24px;

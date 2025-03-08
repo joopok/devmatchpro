@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { useNavigate } from 'react-router-dom';
-import { AuthLayout } from './Login.styles';
+import { AuthLayout, ErrorMessage } from './Login.styles';
 
 interface SignUpFormData {
   email: string;
@@ -33,19 +33,39 @@ const FormGroup = styled.div`
 
 const Register = () => {
   const navigate = useNavigate();
+  const [registerError, setRegisterError] = useState<string | null>(null);
   const { register, handleSubmit, formState: { errors }, watch } = useForm<SignUpFormData>();
   const password = watch('password');
 
   const onSubmit = async (data: SignUpFormData) => {
     try {
-      // 회원가입 로직 구현
-      console.log('회원가입 데이터:', data);
+      setRegisterError(null);
       
-      // 회원가입 성공 후 로그인 페이지로 이동
+      const response = await fetch('http://localhost:8081/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username1: data.name,
+          email: data.email,
+          password: data.password,
+        }),
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || '회원가입에 실패했습니다.');
+      }
+      
       navigate('/login');
-    } catch (error) {
+    } catch (error: any) {
       console.error('회원가입 오류:', error);
-      alert('회원가입 실패: ' + (error instanceof Error ? error.message : String(error)));
+      if (error instanceof Error) {
+        setRegisterError(error.message);
+      } else {
+        setRegisterError('회원가입 중 오류가 발생했습니다. 다시 시도해 주세요.');
+      }
     }
   };
 
@@ -53,6 +73,13 @@ const Register = () => {
     <AuthLayout>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Title>회원가입</Title>
+        
+        {registerError && (
+          <ErrorMessage>
+            {registerError}
+          </ErrorMessage>
+        )}
+        
         <FormGroup>
           <Input
             {...register('email', {

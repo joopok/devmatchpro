@@ -4,10 +4,10 @@ import { Settings, X, Monitor, Moon, Sun, Layout, LayoutGrid, Sidebar, ArrowLeft
 import { useBootstrap } from '../../contexts/BootstrapContext';
 
 // 스타일 컴포넌트
-const SettingsContainer = styled.div<{ isOpen: boolean }>`
+const SettingsContainer = styled.div<{ $isOpen: boolean }>`
   position: fixed;
   top: 0;
-  right: ${({ isOpen }) => (isOpen ? '0' : '-300px')};
+  right: ${({ $isOpen }) => ($isOpen ? '0' : '-300px')};
   width: 300px;
   height: 100%;
   background-color: var(--bs-tertiary-bg);
@@ -173,7 +173,7 @@ const SettingsPanel: React.FC = () => {
         <Settings size={20} />
       </SettingsToggle>
 
-      <SettingsContainer isOpen={isSettingsPanelOpen}>
+      <SettingsContainer $isOpen={isSettingsPanelOpen}>
         <SettingsHeader>
           <SettingsTitle>설정</SettingsTitle>
           <CloseButton onClick={closeSettingsPanel}>

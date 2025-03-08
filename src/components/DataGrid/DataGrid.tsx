@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Table } from '../table/Table';
+import { Table } from '../Table/Table';
 import { Pagination } from '../Pagination/Pagination';
-import { SearchBar } from '../search/SearchBar';
+import { SearchBar } from '../Search/SearchBar';
 import { FilterGroup } from '../Filter/FilterGroup';
 import {
   DataGridContainer,
@@ -9,6 +9,14 @@ import {
   FiltersContainer,
 } from './DataGrid.styles';
 
+interface Column<T> {
+  key: keyof T;
+  title: string;
+  header?: string;
+  render?: (value: T[keyof T], item: T) => React.ReactNode;
+  sortable?: boolean;
+  filterable?: boolean;
+}
 interface DataGridProps<T> {
   data: T[];
   columns: Array<{
@@ -65,6 +73,7 @@ export function DataGrid<T extends { id: string | number }>({
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
+  
 
   return (
     <DataGridContainer>

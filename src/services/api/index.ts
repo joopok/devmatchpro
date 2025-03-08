@@ -63,10 +63,8 @@ export const apiClient = {
 // API 서비스 구성
 export const api = {
   auth: {
-    login: (credentials: { email: string; password: string }) => 
-      apiClient.post('/auth/login', credentials),
-    register: (userData: { email: string; password: string; name: string }) => 
-      apiClient.post('/auth/register', userData),
+    login: (credentials: { email: string; password: string }) =>  apiClient.post('/auth/login', credentials),
+    register: (userData: { email: string; password: string; name: string }) => apiClient.post('/auth/register', userData),
     logout: () => apiClient.post('/auth/logout'),
     getCurrentUser: () => apiClient.get('/auth/me'),
   },

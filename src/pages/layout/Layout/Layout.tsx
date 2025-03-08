@@ -13,9 +13,9 @@ const LayoutContainer = styled.div`
   background: ${({ theme }) => theme.isDarkMode ? '#1e2232' : '#fff'};
 `;
 
-const MainWrapper = styled.div<{ isSidebarOpen: boolean }>`
+const MainWrapper = styled.div<{ $isSidebarOpen: boolean }>`
   flex: 1;
-  margin-left: ${({ isSidebarOpen }) => (isSidebarOpen ? '280px' : '0')};
+  margin-left: ${({ $isSidebarOpen }) => ($isSidebarOpen ? '280px' : '0')};
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -58,7 +58,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <LayoutContainer>
-      <MainWrapper isSidebarOpen= { isSidebarOpen } >
+      <MainWrapper $isSidebarOpen= { isSidebarOpen } >
         <Sidebar />
         <Header />
         <MainContent>

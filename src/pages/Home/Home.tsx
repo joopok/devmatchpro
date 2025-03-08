@@ -292,7 +292,28 @@ const Home: React.FC = () => {
     const calendarRef = useRef<HTMLDivElement>(null);
     const [currentDate, setCurrentDate] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [initialized, setInitialized] = useState(false);
     
+    useEffect(() => {
+      // 컴포넌트가 마운트되면 초기화 완료 상태로 설정
+      setInitialized(true);
+      
+      // 창 크기 변경 시 캘린더 크기 유지를 위한 이벤트 핸들러
+      const handleResize = () => {
+        if (calendarRef.current) {
+          // 강제로 리렌더링하지 않고 DOM 요소의 스타일만 업데이트
+          calendarRef.current.style.minHeight = '350px';
+        }
+      };
+      
+      window.addEventListener('resize', handleResize);
+      
+      // 클린업
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }, []);
+
     // 달력 데이터 생성
     const generateCalendarData = (date: Date) => {
       const year = date.getFullYear();
@@ -370,52 +391,76 @@ const Home: React.FC = () => {
       }
     };
     
-    // 요일 이름
-    const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
-    
     return (
-      <div className="simple-calendar" ref={calendarRef}>
-        <div className="calendar-header">
-          <button className="calendar-nav-btn" onClick={prevMonth}>
-            <span className="visually-hidden">이전 달</span>
-          </button>
-          <h5>{calendarData.year}년 {calendarData.monthName}</h5>
-          <button className="calendar-nav-btn" onClick={nextMonth}>
-            <span className="visually-hidden">다음 달</span>
-          </button>
-        </div>
-        
-        <table className="calendar-table">
-          <thead>
-            <tr>
-              {weekdays.map(day => (
-                <th key={day}>{day}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {Array(6).fill(null).map((_, weekIndex) => (
-              <tr key={weekIndex}>
-                {calendarData.days.slice(weekIndex * 7, (weekIndex + 1) * 7).map((day, dayIndex) => (
-                  <td 
-                    key={dayIndex}
-                    className={`
-                      ${day.currentMonth ? 'current-month' : 'other-month'}
-                      ${day.isToday ? 'today' : ''}
-                      ${selectedDate && day.currentMonth && 
-                        selectedDate.getDate() === day.date && 
-                        selectedDate.getMonth() === calendarData.month ? 
-                        'selected' : ''}
-                    `}
-                    onClick={() => handleDateClick(day)}
-                  >
-                    {day.date}
-                  </td>
+      <div ref={calendarRef} className="calendar-container">
+        {initialized && (
+          <>
+            <div className="calendar-header">
+              <div className="calendar-controls">
+                <button className="btn btn-sm btn-outline-secondary" onClick={prevMonth}>
+                  <span>&laquo;</span>
+                </button>
+                <button className="btn btn-sm btn-outline-secondary" onClick={nextMonth}>
+                  <span>&raquo;</span>
+                </button>
+              </div>
+              <h5 className="calendar-title">
+                {calendarData.year}년 {calendarData.monthName}
+              </h5>
+            </div>
+            
+            <table className="calendar-table">
+              <thead>
+                <tr>
+                  <th>일</th>
+                  <th>월</th>
+                  <th>화</th>
+                  <th>수</th>
+                  <th>목</th>
+                  <th>금</th>
+                  <th>토</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Array(6).fill(null).map((_, weekIndex) => (
+                  <tr key={`week-${weekIndex}`}>
+                    {Array(7).fill(null).map((_, dayIndex) => {
+                      const dayObj = calendarData.days[weekIndex * 7 + dayIndex];
+                      const isSelected = selectedDate && 
+                        selectedDate.getDate() === dayObj.date && 
+                        selectedDate.getMonth() === calendarData.month &&
+                        selectedDate.getFullYear() === calendarData.year;
+                      
+                      let className = '';
+                      
+                      if (dayObj.prevMonth || dayObj.nextMonth) {
+                        className = 'other-month';
+                      }
+                      
+                      if (dayObj.isToday) {
+                        className += ' bg-primary text-white';
+                      }
+                      
+                      if (isSelected) {
+                        className += ' bg-info text-white';
+                      }
+                      
+                      return (
+                        <td 
+                          key={`day-${weekIndex}-${dayIndex}`} 
+                          className={className}
+                          onClick={() => handleDateClick(dayObj)}
+                        >
+                          {dayObj.date}
+                        </td>
+                      );
+                    })}
+                  </tr>
                 ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+              </tbody>
+            </table>
+          </>
+        )}
       </div>
     );
   };
@@ -425,10 +470,13 @@ const Home: React.FC = () => {
     const styleElement = document.createElement('style');
     styleElement.innerHTML = `
       .simple-calendar {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         padding: 1.5rem;
         background-color: #1c2433;
         border-radius: 0.5rem;
+        width: 100%;
+        height: 100%;
+        min-height: 400px;
       }
       
       .calendar-header {
@@ -772,7 +820,7 @@ const Home: React.FC = () => {
                       
                       {/* 피드 항목 3 */}
                 <div className="d-flex align-items-start">
-                        <img src="/assets/img/avatars/avatar-4.jpg" width="36" height="36" className="rounded-circle me-2" alt="Stacie Hall" />
+                    <img src="/assets/img/avatars/avatar-4.jpg" width="36" height="36" className="rounded-circle me-2" alt="Stacie Hall" />
                   <div className="flex-grow-1">
                     <small className="float-end">1h ago</small>
                     <strong>Stacie Hall</strong> posted a new blog<br />
@@ -782,7 +830,7 @@ const Home: React.FC = () => {
                 <hr />
                 
                 {/* 더 보기 버튼 */}
-          <div className="d-grid">
+                <div className="d-grid">
                   <a href="#" className={`btn ${isDarkMode ? 'btn-outline-light' : 'btn-primary'}`}>Load more</a>
                 </div>
               </div>
@@ -798,8 +846,8 @@ const Home: React.FC = () => {
               <div className="card-header">
                 <h5 className="card-title mb-0">Calendar</h5>
               </div>
-              <div className="card-body">
-                <div id="calendar-dashboard" style={{ minHeight: '300px' }}>
+              <div className="card-body d-flex flex-column">
+                <div id="calendar-dashboard" className="flex-grow-1" style={{ minHeight: '350px', height: '100%' }}>
                   <SimpleCalendar />
                 </div>
               </div>
@@ -949,7 +997,7 @@ const Home: React.FC = () => {
                       <div className="d-flex">
                         <div className="flex-shrink-0">
                           <div className="bg-body-tertiary rounded-2">
-                            <img className="p-2" src="img/brands/brand-1.svg" />
+                            <img className="p-2" src="/assets/img/brands/brand-1.svg" />
                           </div>
                         </div>
                         <div className="flex-grow-1 ms-3">
@@ -989,7 +1037,7 @@ const Home: React.FC = () => {
                       <div className="d-flex">
                         <div className="flex-shrink-0">
                           <div className="bg-body-tertiary rounded-2">
-                            <img className="p-2" src="img/brands/brand-2.svg" />
+                            <img className="p-2" src="/assets/img/brands/brand-2.svg" />
                           </div>
                         </div>
                         <div className="flex-grow-1 ms-3">
@@ -1029,7 +1077,7 @@ const Home: React.FC = () => {
                       <div className="d-flex">
                         <div className="flex-shrink-0">
                           <div className="bg-body-tertiary rounded-2">
-                            <img className="p-2" src="img/brands/brand-3.svg" />
+                            <img className="p-2" src="/assets/img/brands/brand-3.svg" />
                           </div>
                         </div>
                         <div className="flex-grow-1 ms-3">
@@ -1069,7 +1117,7 @@ const Home: React.FC = () => {
                       <div className="d-flex">
                         <div className="flex-shrink-0">
                           <div className="bg-body-tertiary rounded-2">
-                            <img className="p-2" src="img/brands/brand-4.svg" />
+                            <img className="p-2" src="/assets/img/brands/brand-4.svg" />
                           </div>
                         </div>
                         <div className="flex-grow-1 ms-3">
@@ -1109,7 +1157,7 @@ const Home: React.FC = () => {
                       <div className="d-flex">
                         <div className="flex-shrink-0">
                           <div className="bg-body-tertiary rounded-2">
-                            <img className="p-2" src="img/brands/brand-5.svg" />
+                            <img className="p-2" src="/assets/img/brands/brand-5.svg" />
                           </div>
                         </div>
                         <div className="flex-grow-1 ms-3">

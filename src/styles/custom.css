@@ -10,6 +10,16 @@
   --dark-gradient: linear-gradient(135deg, #4b6584 0%, #2d3436 100%);
 }
 
+/* 모든 요소에 밑줄 제거 적용 */
+* {
+  text-decoration: none !important;
+}
+
+/* 모든 링크에 밑줄 제거 적용 */
+a, a:hover, a:focus, a:active, a:visited {
+  text-decoration: none !important;
+}
+
 /* 애니메이션 효과 */
 .fade-in {
   animation: fadeIn 0.5s ease;

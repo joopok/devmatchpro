@@ -12,6 +12,7 @@ interface SignupRequest {
   email: string;
   password: string;
   username: string;
+  username1: string;
   role: 'DEVELOPER' | 'CLIENT';
 }
 
@@ -28,7 +29,7 @@ const validateSession = (): boolean => {
 };
 
 export const authApi = {
-  login: async (credentials: { username: string; password: string }): Promise<{ data: AuthResponse }> => {
+  login: async (credentials: { username1: string; password: string }): Promise<{ data: AuthResponse }> => {
     try {
       // API 호출 전 기존 토큰 확인
       const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
@@ -41,10 +42,10 @@ export const authApi = {
       // 응답 데이터 구조 통일
       const userData: User = {
         id: response.data.user.id,
-        username: response.data.user.username || response.data.user.email,
+        username: response.data.user.username,
         email: response.data.user.email,
         role: response.data.user.role || 'USER',
-        name: response.data.user.name,
+        username1: response.data.user.username1,
         bio: response.data.user.bio,
         githubUrl: response.data.user.githubUrl,
         portfolioUrl: response.data.user.portfolioUrl,
@@ -86,6 +87,7 @@ export const authApi = {
       email: data.email,
       password: data.password,
       username: data.username,
+      username1: data.username1,
       role: data.role,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),

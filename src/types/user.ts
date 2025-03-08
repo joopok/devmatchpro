@@ -45,6 +45,7 @@ export enum WorkType {
 export interface User {
   id: string;
   username: string;
+  username1: string;
   email: string;
   role: string;
   name?: string;
@@ -95,7 +96,8 @@ export interface ClientProfile extends User {
 }
 
 export interface ProfileEditorData {
-  name: string;
+  username: string;
+  username1: string;
   title: string;
   bio: string;
   profileImage?: string;

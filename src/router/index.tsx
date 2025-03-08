@@ -22,7 +22,9 @@ const withSuspense = (Component: React.LazyExoticComponent<any>): React.ReactEle
 
 /**
  * 인증이 필요한 컴포넌트를 위한 HOC
+ * 현재 미사용이지만 추후 사용 예정
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const withPrivate = (Component: React.LazyExoticComponent<any>): React.ReactElement => {
   return (
     <PrivateRoute>
@@ -47,8 +49,8 @@ export const router = createBrowserRouter([
   {
     path: 'auth',
     children: [
-      { path: 'login', element: withSuspense(React.lazy(() => import('../pages/auth/Login'))) },
-      { path: 'register', element: withSuspense(React.lazy(() => import('../pages/auth/Register'))) },
+      { path: 'login', element: withSuspense(React.lazy(() => import('../pages/Auth/Login'))) },
+      { path: 'register', element: withSuspense(React.lazy(() => import('../pages/Auth/Register'))) },
     ],
   },
   {

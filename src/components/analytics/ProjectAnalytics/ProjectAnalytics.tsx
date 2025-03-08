@@ -1,8 +1,9 @@
 import React from 'react';
-import { LineChart } from '../../charts/LineChart';
-import { BarChart } from '../../charts/BarChart';
-import { PieChart } from '../../charts/PieChart';
+import { LineChart } from '../../Charts/LineChart';
+import { BarChart } from '../../Charts/BarChart';
+import { PieChart } from '../../Charts/PieChart';
 import { Card } from '../../Card';
+import { formatCurrency, formatPercentage } from '../../../utils/formatters';
 import {
   AnalyticsContainer,
   Header,
@@ -10,7 +11,7 @@ import {
   ChartSection,
   ChartCard,
   MetricsGrid,
-  } from './ProjectAnalytics.styles';
+} from './ProjectAnalytics.styles';
 
 interface ProjectMetrics {
   totalProjects: number;
@@ -53,18 +54,6 @@ export const ProjectAnalytics: React.FC<ProjectAnalyticsProps> = ({
   dateRange,
   onDateRangeChange,
 }) => {
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('ko-KR', {
-      style: 'currency',
-      currency: 'KRW',
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
-  const formatPercentage = (value: number) => {
-    return `${(value * 100).toFixed(1)}%`;
-  };
-
   const getStatusColor = (status: string) => {
     switch (status) {
       case '진행중':

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '../../Button';
-import { ProjectCard } from '../../project/ProjectCard/ProjectCard';
-import { DeveloperCard } from '../../developer/DeveloperCard/DeveloperCard';
+import { ProjectCard } from '../../Project/ProjectCard/ProjectCard';
+import { DeveloperCard } from '../../Developer/DeveloperCard/DeveloperCard';
 import {
   ResultsContainer,
   ResultsHeader,

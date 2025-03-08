@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { ToastType, ToastPosition } from './types';
 
 export const ToastWrapper = styled.div`
   position: fixed;

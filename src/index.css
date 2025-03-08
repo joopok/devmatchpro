@@ -3,6 +3,16 @@
 @tailwind utilities;
 
 @layer base {
+  /* 모든 요소에 텍스트 밑줄 제거 적용 */
+  * {
+    text-decoration: none !important;
+  }
+  
+  /* 링크에도 밑줄 제거 적용 */
+  a {
+    text-decoration: none !important;
+  }
+  
   body {
     @apply bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
     margin: 0;
