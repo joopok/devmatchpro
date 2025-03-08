@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import { TaskBoard } from '../../components/common/dashboard/TaskBoard/TaskBoard';
-import { ProjectMetrics } from '../../components/common/dashboard/ProjectMetrics/ProjectMetrics';
-import { RevenueAnalytics } from '../../components/common/analytics/RevenueAnalytics/RevenueAnalytics';
+import { TaskBoard } from '../../components/dashboard/TaskBoard/TaskBoard';
+import { ProjectMetrics } from '../../components/dashboard/ProjectMetrics/ProjectMetrics';
+import { RevenueAnalytics } from '../../components/analytics/RevenueAnalytics/RevenueAnalytics';
 import { Task } from '../../types/task';
 import { Project, ProjectStatus, WorkType, Priority } from '../../types/project';
 

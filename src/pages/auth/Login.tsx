@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { TextField } from '../../components/common/TextField';
+import { TextField } from '../../components/TextField';
 import { postRequest } from '../../services/api/axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';

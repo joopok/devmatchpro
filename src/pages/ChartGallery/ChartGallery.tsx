@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Card } from '../../components/common/Card';
+import { Card } from '../../components/Card';
 import { 
   LineChart, 
   BarChart, 
@@ -11,7 +11,7 @@ import {
   AreaChart,
   HorizontalBarChart,
   MixedChart
-} from '../../components/common/charts';
+} from '../../components/charts';
 
 const PageContainer = styled.div`
   padding: 24px;

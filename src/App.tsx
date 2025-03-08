@@ -1,13 +1,13 @@
 import React, { Suspense, useEffect } from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { RouterProvider } from 'react-router-dom';
-import { ToastProvider } from './components/common/Toast';
+import { ToastProvider } from './components/Toast';
 import { useSelector } from 'react-redux';
 import baseTheme from './styles/theme';
 import { RootState } from './store/store';
 import GlobalStyle from './styles/GlobalStyle';
 import { router } from './router';
-import { ErrorBoundary } from './components/common/ErrorBoundary/ErrorBoundary';
+import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import './App.css';
 import './styles/fonts.css';
 import './styles/bootstrap-variables.css';
@@ -16,7 +16,7 @@ import './styles/custom.css';
 
 import { ThemeProvider } from './contexts/ThemeContext';
 import { BootstrapProvider } from './contexts/BootstrapContext';
-import SettingsPanel from './components/common/settings/SettingsPanel';
+import SettingsPanel from './components/settings/SettingsPanel';
 import { initCSSVariables } from './utils/cssVariables';
 import { initBootstrap } from './utils/bootstrap';
 

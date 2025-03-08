@@ -1,5 +1,5 @@
 import React from 'react';
-import { TeamList as TeamListComponent } from '../../components/common/team/TeamList';
+import { TeamList as TeamListComponent } from '../../components/team/TeamList';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../../services/api/axios';

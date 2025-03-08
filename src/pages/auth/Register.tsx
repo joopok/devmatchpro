@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { Button } from '../../components/common/Button';
-import { Input } from '../../components/common/Input';
+import { Button } from '../../components/Button';
+import { Input } from '../../components/Input';
 import { useNavigate } from 'react-router-dom';
 import { AuthLayout } from './Login.styles';
 

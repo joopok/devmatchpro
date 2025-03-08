@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
-import { LineChart, PieChart } from '../../components/common/charts';
-import { Card } from '../../components/common/Card';
+import { LineChart, PieChart } from '../../components/charts';
+import { Card } from '../../components/Card';
 import { useAuth } from '../../hooks/useAuth';
 import { ProjectStatus } from '../../types/project';
 
